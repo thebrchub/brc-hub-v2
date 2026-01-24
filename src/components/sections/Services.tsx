@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Code2, Smartphone, Rocket, Palette, BarChart3, Globe, ArrowUpRight, Search, Megaphone } from "lucide-react";
+import { Code2, Smartphone, BarChart3, Globe, ArrowUpRight, Search, Megaphone } from "lucide-react";
 import { ServiceModal } from "../ui/ServiceModal";
 
 // UPDATED DATA STRUCTURE with details for the Modal

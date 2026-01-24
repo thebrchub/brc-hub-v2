@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Send, CheckCircle2 } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "../ui/Button";
 
 const services = [

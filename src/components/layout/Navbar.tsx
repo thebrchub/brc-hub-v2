@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { useNavigate } from 'react-router-dom';
+// Removed 'useNavigate' from imports since it is not used
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,8 +10,8 @@ export const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
-  const navigate = useNavigate();
-
+  // REMOVED: const navigate = useNavigate();  <-- This was causing the error
+  
   const navLinks = [
     { name: 'Home', to: 'hero' },
     { name: 'About', to: 'about' },
@@ -51,17 +51,15 @@ export const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
 
-          {/* LOGO SECTION */}
+          {/* LOGO */}
           <div 
             className="flex-shrink-0 flex items-center gap-2 cursor-pointer relative z-50"
             onClick={handleLogoClick}
           >
-            {/* 1. REMOVED FLYING ANIMATION: Just a standard div now */}
             <div>
                 <img src="/logo.svg" alt="BRC Hub" className="h-10 w-auto object-contain" />
             </div>
             
-            {/* 2. TEXT UPDATE: Removed the 2.8s delay. Now it's fast (0.3s). */}
             <motion.span 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -109,7 +107,7 @@ export const Navbar = () => {
             ))}
           </nav>
 
-          {/* RIGHT SIDE: CTA */}
+          {/* CTA & MOBILE MENU BUTTON */}
           <div className="flex items-center gap-4 flex-shrink-0 z-50">
             <div className="hidden md:block">
               <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
