@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+body {
+  background-color: #0A0A0A; /* Matches bg-brc-black */
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* FORCE normal weight by default */
+  font-family: 'Inter', sans-serif;
+  font-weight: 400; 
+  -webkit-font-smoothing: antialiased; /* Makes text look thinner and crisper on Mac/iOS */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5722;
+}
