@@ -7,20 +7,24 @@
   color: #FFFFFF;
 }
 
-body {
-  background-color: #0A0A0A; /* Matches bg-brc-black */
-  margin: 0;
-  padding: 0;
+/* GLOBAL LAYOUT SAFETY */
+html,
+body,
+#root,
+#portal-root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
+/* BODY BASE */
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  /* FORCE normal weight by default */
+  background-color: #0A0A0A;
   font-family: 'Inter', sans-serif;
-  font-weight: 400; 
-  -webkit-font-smoothing: antialiased; /* Makes text look thinner and crisper on Mac/iOS */
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -28,13 +32,16 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0A0A0A;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #333;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #FF5722;
 }
