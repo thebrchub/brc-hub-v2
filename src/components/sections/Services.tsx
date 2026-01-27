@@ -2,8 +2,9 @@ import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Code2, Smartphone, BarChart3, Globe, ArrowUpRight, Search, Megaphone } from "lucide-react";
 import { ServiceModal } from "../ui/ServiceModal";
+// 1. IMPORT THE NEW HYBRID COMPONENT
+import { SpotlightTiltCard } from "../ui/SpotlightTiltCard"; 
 
-// UPDATED DATA STRUCTURE with details for the Modal
 const services = [
   {
     category: "Engineering",
@@ -157,37 +158,44 @@ export const Services = () => {
             <motion.div
               key={index}
               variants={item}
-              whileHover={{ y: -5 }}
-              onClick={() => setSelectedService(service)} // OPEN MODAL ON CLICK
-              className="group relative p-8 rounded-3xl bg-white/[0.03] border border-white/5 overflow-hidden hover:bg-white/[0.06] transition-all duration-300 cursor-pointer"
+              className="h-full"
             >
-              {/* Hover Glow */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_top_right,rgba(255,87,34,0.15),transparent_60%)] pointer-events-none" />
+              {/* 2. USING THE HYBRID COMPONENT */}
+              <SpotlightTiltCard
+                onClick={() => setSelectedService(service)}
+                intensity={25} // High Tilt
+                spotlightColor="rgba(255, 87, 34, 0.2)" // High Visibility Spotlight
+                className="group h-full cursor-pointer"
+              >
+                <div className="p-8 h-full flex flex-col">
+                    
+                    {/* Icon Container - Added a subtle shadow */}
+                    <div className="mb-6 relative z-10 p-3 bg-white/5 rounded-2xl w-fit border border-white/5 group-hover:border-brc-orange/30 group-hover:text-brc-orange text-gray-300 transition-colors shadow-lg shadow-transparent group-hover:shadow-brc-orange/10">
+                    {service.icon}
+                    </div>
 
-              <div className="mb-6 relative z-10 p-3 bg-white/5 rounded-2xl w-fit border border-white/5 group-hover:border-brc-orange/30 group-hover:text-brc-orange text-gray-300 transition-colors">
-                {service.icon}
-              </div>
+                    <div className="relative z-10 flex-grow">
+                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 block">
+                            {service.category}
+                        </span>
+                        <h3 className="text-xl font-display font-bold text-white mb-3 group-hover:text-brc-orange transition-colors">
+                            {service.title}
+                        </h3>
+                        <p className="text-gray-400 leading-relaxed text-sm">
+                            {service.description}
+                        </p>
+                    </div>
 
-              <div className="relative z-10">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 block">
-                  {service.category}
-                </span>
-                <h3 className="text-xl font-display font-bold text-white mb-3 group-hover:text-brc-orange transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed text-sm">
-                  {service.description}
-                </p>
-              </div>
-
-              <div className="absolute top-8 right-8 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                <ArrowUpRight className="text-brc-orange w-5 h-5" />
-              </div>
+                    {/* Arrow Icon */}
+                    <div className="absolute top-8 right-8 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowUpRight className="text-brc-orange w-5 h-5" />
+                    </div>
+                </div>
+              </SpotlightTiltCard>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* THE MODAL COMPONENT */}
         <ServiceModal 
             isOpen={!!selectedService} 
             onClose={() => setSelectedService(null)} 

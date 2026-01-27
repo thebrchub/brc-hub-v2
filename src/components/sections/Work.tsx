@@ -2,8 +2,9 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "../ui/Button";
+import { SpotlightTiltCard as TiltCard } from "../ui/SpotlightTiltCard";
 
-// Placeholder Data - Replace with your real projects
+// Placeholder Data
 const projects = [
   {
     title: "Orvexa Systems",
@@ -28,17 +29,15 @@ const projects = [
   }
 ];
 
-// Individual Project Card Component with Parallax Logic
 const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   
-  // Track scroll progress of THIS specific card
+  // Parallax Scroll Logic
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  // FIX 1: Increased range and used percentages for smoother movement
   const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
   return (
@@ -50,25 +49,27 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
       transition={{ duration: 0.8, delay: index * 0.1 }}
       className="group relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-24 md:mb-32 last:mb-0"
     >
-      {/* 1. Project Image (Parallax Container) */}
-      <div className={`relative h-[300px] md:h-[450px] rounded-3xl overflow-hidden border border-white/10 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
-        <motion.div 
-          style={{ y, scale: 1.1 }} 
-          // FIX 2: Height set to 140% and top to -20%. 
-          // This makes the image taller than the box, giving it room to move.
-          className="absolute w-full h-[140%] -top-[20%] left-0" 
-        >
-           <img 
-            src={project.image} 
-            alt={project.title} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-           />
-           {/* Dark Overlay on hover */}
-           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
-        </motion.div>
+      {/* 2. THE IMAGE SIDE (Now Wrapped in TiltCard) */}
+      <div className={`h-[300px] md:h-[450px] ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+         {/* We use TiltCard here. 
+            It handles the rounded corners, border, and the 3D hover effect automatically.
+         */}
+         <TiltCard className="h-full w-full">
+            <motion.div 
+                style={{ y, scale: 1.1 }} 
+                className="absolute w-full h-[140%] -top-[20%] left-0" 
+            >
+                <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+            </motion.div>
+         </TiltCard>
       </div>
 
-      {/* 2. Project Details */}
+      {/* 3. Project Details */}
       <div className={`${index % 2 === 1 ? 'md:order-1' : ''}`}>
         <div className="flex items-center gap-3 mb-4">
             <span className="h-[1px] w-8 bg-brc-orange" />
