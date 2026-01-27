@@ -1,7 +1,18 @@
-import { Instagram, Linkedin, Twitter, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
+import { Instagram, Linkedin, Facebook, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Link as ScrollLink } from 'react-scroll';
+
+// Custom X (formerly Twitter) Logo Component
+const XLogo = ({ className }: { className?: string }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    aria-hidden="true" 
+    className={`w-5 h-5 fill-current ${className}`} // fill-current ensures it takes the parent's text color
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -83,13 +94,13 @@ export const Footer = () => {
                     BRC<span className="text-brc-orange"> Hub</span>
                 </span>
             </div>
-            {/* <p className="text-gray-400 leading-relaxed pr-6">
-              A full-cycle digital agency merging creative engineering with data-driven marketing. We don't just build products; we build businesses.
-            </p> */}
+            
             <div className="flex items-center gap-4 pt-4">
-              <SocialIcon icon={<Instagram size={20} />} href="#" />
-              <SocialIcon icon={<Linkedin size={20} />} href="#" />
-              <SocialIcon icon={<Twitter size={20} />} href="#" />
+              <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/thebrchub" />
+              <SocialIcon icon={<Linkedin size={20} />} href="https://www.linkedin.com/company/the-brc-hub" />
+              {/* REPLACED TWITTER BIRD WITH X LOGO */}
+              <SocialIcon icon={<XLogo />} href="https://twitter.com/thebrchub" />
+              <SocialIcon icon={<Facebook size={20} />} href="https://www.facebook.com/thebrchub" />
             </div>
           </div>
 
