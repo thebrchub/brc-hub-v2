@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { CheckCircle2, Zap, Users, Heart } from "lucide-react";
+import { SpotlightTiltCard } from "../ui/SpotlightTiltCard";
 
 // Stats Data
 const stats = [
@@ -56,7 +57,7 @@ const Counter = ({ value, suffix }: { value: number, suffix: string }) => {
 
 export const About = () => {
   return (
-    <section id="about" className="relative py-24 bg-brc-black overflow-hidden">
+    <section id="about" className="relative py-24 bg-brc-black overflow-hidden border-t border-white/5">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[100px] pointer-events-none" />
@@ -107,34 +108,41 @@ export const About = () => {
                 </div>
             </div>
 
-            {/* Right: The Values Grid */}
+            {/* Right: The Values Grid (Tech + Marketing Mindset) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {values.map((item, index) => (
-                    <motion.div
+                    <SpotlightTiltCard
                         key={index}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
-                        className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-brc-orange/30 transition-colors group"
+                        intensity={15} 
+                        // FIX: Explicitly set a bright, visible orange spotlight
+                        spotlightColor="rgba(255, 87, 34, 0.4)" 
+                        className="h-full"
                     >
-                        <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                            {item.icon}
+                        <div className="p-6 h-full flex flex-col group relative z-20">
+                            <div className="w-12 h-12 rounded-full bg-black/50 border border-white/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:border-brc-orange/50 transition-all duration-300 shadow-lg shadow-black/20">
+                                {item.icon}
+                            </div>
+                            <h4 className="text-lg font-bold text-white mb-2 group-hover:text-brc-orange transition-colors">
+                                {item.title}
+                            </h4>
+                            <p className="text-sm text-gray-400 leading-relaxed">
+                                {item.desc}
+                            </p>
                         </div>
-                        <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
-                        <p className="text-sm text-gray-400 leading-relaxed">
-                            {item.desc}
-                        </p>
-                    </motion.div>
+                    </SpotlightTiltCard>
                 ))}
             </div>
 
         </div>
 
-        {/* Bottom Tagline */}
+        {/* Bottom Tagline - UPDATED FOR TECH + MARKETING */}
         <div className="text-center pt-12 border-t border-white/5">
             <p className="font-display text-2xl md:text-3xl text-gray-500">
-                "We don't build websites. We build <span className="text-white">Assets</span>."
+                "We don't just build Technology. We build <span className="text-white">Growth</span>."
             </p>
         </div>
 

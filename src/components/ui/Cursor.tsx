@@ -22,6 +22,7 @@ export const Cursor = () => {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      // We check if the element is interactive to trigger the "Expand" animation
       const isInteractive = 
         target.tagName === "BUTTON" ||
         target.tagName === "A" ||
@@ -29,7 +30,7 @@ export const Cursor = () => {
         target.tagName === "TEXTAREA" ||
         target.closest("button") || 
         target.closest("a") ||
-        target.classList.contains("cursor-pointer");
+        target.classList.contains("cursor-pointer"); // Covers Tailwind 'cursor-pointer'
 
       setIsHovering(!!isInteractive);
     };
@@ -54,13 +55,16 @@ export const Cursor = () => {
     <>
       <style>{`
         @media (pointer: fine) {
-          body { cursor: none; }
-          /* Ensure modal content also hides default cursor */
-          .cursor-none, a, button, input, textarea { cursor: none; }
+          /* FORCE HIDE SYSTEM CURSOR GLOBALLY
+             The !important ensures it overrides specific styles like 'cursor: pointer' on tabs/buttons 
+          */
+          * { 
+            cursor: none !important; 
+          }
         }
       `}</style>
 
-      {/* FIX: Increased z-index to 100000 to sit above the Modal (which is z-9999) */}
+      {/* Z-Index 100000 ensures it sits above Modals/Overlays */}
       <div className="pointer-events-none fixed inset-0 z-[100000] hidden md:block">
         
         {/* 1. THE ORBIT */}
