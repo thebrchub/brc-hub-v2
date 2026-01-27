@@ -7,6 +7,7 @@ import { Work } from './components/sections/Work';
 import { Contact } from './components/sections/Contact';
 import { Footer } from './components/layout/Footer';
 import { Cursor } from './components/ui/Cursor'; // <--- IMPORT IT
+import { About } from './components/sections/About';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Navbar />
         <main>
           <Hero />
+          <About />
           <Services />
           <Work />
           <Contact />

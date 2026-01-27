@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react';
+import { Instagram, Linkedin, Twitter, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Link as ScrollLink } from 'react-scroll';
@@ -10,10 +10,8 @@ export const Footer = () => {
     <footer className="relative bg-brc-black pt-24 pb-12 overflow-hidden border-t border-white/5">
       
       {/* 1. ANIMATED BACKGROUND DECOR */}
-      {/* The top gradient line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-brc-orange/50 to-transparent opacity-30" />
       
-      {/* The "Breathing" Glow Blob */}
       <motion.div 
         animate={{ 
             scale: [1, 1.2, 1],
@@ -29,7 +27,7 @@ export const Footer = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* 2. MASSIVE CTA SECTION (With Scroll Reveal) */}
+        {/* 2. MASSIVE CTA SECTION */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-24">
           <div className="max-w-3xl">
             <motion.h2 
@@ -61,8 +59,9 @@ export const Footer = () => {
             className="flex-shrink-0"
           >
              <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
-                 <Button size="lg" className="h-20 px-12 text-xl rounded-full shadow-2xl shadow-orange-500/20 hover:shadow-orange-500/40">
-                   Start a Project
+                 <Button size="lg" className="group h-20 px-12 text-xl rounded-full shadow-2xl shadow-orange-500/20 hover:shadow-orange-500/40">
+                   Start a Project 
+                   <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                  </Button>
              </ScrollLink>
           </motion.div>
@@ -74,14 +73,19 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-4 space-y-6">
             <div className="flex items-center gap-3">
-                {/* Replaced Image with Text Logo if image is missing, safe fallback */}
+                {/* RESTORED LOGO IMAGE */}
+                <img 
+                    src="/logo.svg" 
+                    alt="BRC Hub" 
+                    className="h-10 w-auto object-contain" 
+                />
                 <span className="font-display text-3xl font-bold text-white tracking-tight">
-                    BRC<span className="text-brc-orange">Hub</span>
+                    BRC<span className="text-brc-orange"> Hub</span>
                 </span>
             </div>
-            <p className="text-gray-400 leading-relaxed pr-6">
+            {/* <p className="text-gray-400 leading-relaxed pr-6">
               A full-cycle digital agency merging creative engineering with data-driven marketing. We don't just build products; we build businesses.
-            </p>
+            </p> */}
             <div className="flex items-center gap-4 pt-4">
               <SocialIcon icon={<Instagram size={20} />} href="#" />
               <SocialIcon icon={<Linkedin size={20} />} href="#" />
@@ -149,7 +153,7 @@ export const Footer = () => {
   );
 };
 
-// --- Helper Components with Micro-Interactions ---
+// --- Helper Components ---
 
 const FooterLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <li>
@@ -157,9 +161,7 @@ const FooterLink = ({ href, children }: { href: string; children: React.ReactNod
       href={href} 
       className="group flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300"
     >
-      {/* The Line Grows and Turns Orange */}
       <span className="w-0 h-[1px] bg-brc-orange group-hover:w-3 transition-all duration-300" />
-      
       <span className="group-hover:translate-x-1 transition-transform duration-300">
         {children}
       </span>
@@ -172,7 +174,7 @@ const SocialIcon = ({ icon, href }: { icon: React.ReactNode; href: string }) => 
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ y: -5, rotate: 5, scale: 1.1 }} // Fun Bounce Effect
+    whileHover={{ y: -5, rotate: 5, scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
     className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brc-orange hover:text-white transition-colors duration-300 border border-white/10 hover:border-brc-orange shadow-lg shadow-transparent hover:shadow-orange-500/20"
   >
