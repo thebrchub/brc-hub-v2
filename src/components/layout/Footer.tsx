@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Facebook, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
+import { Instagram, Linkedin, Facebook, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Link as ScrollLink } from 'react-scroll';

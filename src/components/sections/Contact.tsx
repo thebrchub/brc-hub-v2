@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Mail, Phone, MapPin } from "lucide-react";
+import { Send, Mail, MapPin } from "lucide-react";
 import { Button } from "../ui/Button";
 
 // 1. Reusable "Tech" Input Component (Laser Focus)
