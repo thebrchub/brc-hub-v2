@@ -7,17 +7,12 @@
   color: #FFFFFF;
 }
 
-/* GLOBAL LAYOUT SAFETY */
-html,
-body,
-#root,
-#portal-root {
+html, body, #root, #portal-root {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* BODY BASE */
 body {
   margin: 0;
   padding: 0;
@@ -28,9 +23,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar */
+/* --- NATIVE SCROLLBAR STYLING --- */
+/* This makes the real scrollbar look like a custom one */
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px; /* Sleek width */
+  background: #0A0A0A; /* Match body background */
 }
 
 ::-webkit-scrollbar-track {
@@ -38,10 +36,25 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
+  background-color: #333333; /* Dark Grey by default */
+  border-radius: 5px; /* Rounded corners */
+  border: 2px solid #0A0A0A; /* Creates padding effect */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF5722;
+  background-color: #FF5722; /* BRC ORANGE on hover */
+}
+
+/* --- CURSOR CONTROL --- */
+@media (pointer: fine) {
+  /* Hide system cursor on the page content */
+  body:not(.show-system-cursor) * {
+    cursor: none !important;
+  }
+  
+  /* Bring back system cursor when requested (e.g. near scrollbar) */
+  body.show-system-cursor,
+  body.show-system-cursor * {
+    cursor: auto !important;
+  }
 }

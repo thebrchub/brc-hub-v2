@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-// Removed 'useNavigate' from imports since it is not used
+// 1. Re-import useNavigate and add useLocation
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,7 +11,10 @@ export const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
-  // REMOVED: const navigate = useNavigate();  <-- This was causing the error
+  // 2. Initialize Hooks
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   
   const navLinks = [
     { name: 'Home', to: 'hero' },
@@ -36,8 +40,20 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY, open]);
 
+  // 3. Smart Navigation Handler (for non-home pages)
+  const handleNavClick = (targetId: string) => {
+    setOpen(false);
+    if (!isHomePage) {
+        navigate("/", { state: { scrollTo: targetId } });
+    }
+  };
+
   const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isHomePage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        navigate("/", { state: { scrollTo: "hero" } }); // Go home and scroll top
+    }
   };
 
   return (
@@ -57,14 +73,14 @@ export const Navbar = () => {
             onClick={handleLogoClick}
           >
             <div>
-                <img src="/logo.svg" alt="BRC Hub" className="h-10 w-auto object-contain" />
+                <img src="/logo.svg" alt="BRC Hub" className="h-12 w-auto object-contain" />
             </div>
             
             <motion.span 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }} 
-                className="font-display text-xl font-bold tracking-tight text-white hidden sm:block"
+                className="font-display text-3xl font-bold tracking-tight text-white hidden sm:block"
             >
                 BRC <span className="text-brc-orange">Hub</span>
             </motion.span>
@@ -80,43 +96,81 @@ export const Navbar = () => {
             `}
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            {navLinks.map((item, index) => (
-                <ScrollLink
-                  key={item.name}
-                  to={item.to}
-                  spy={true}
-                  smooth={true}
-                  offset={-100}
-                  duration={800}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  className="relative px-5 py-2 text-sm text-gray-400 font-medium hover:text-white cursor-pointer transition-colors duration-200 z-10"
-                  activeClass="!text-white font-semibold"
-                >
-                  {item.name}
-                  {hoveredIndex === index && (
-                    <motion.span
-                      layoutId="hover-pill"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute inset-0 rounded-full -z-10 bg-white/10"
-                    />
-                  )}
-                </ScrollLink>
-            ))}
+            {navLinks.map((item, index) => {
+                // Shared classes for both Link types
+                const linkClasses = "relative px-5 py-2 text-sm text-gray-400 font-medium hover:text-white cursor-pointer transition-colors duration-200 z-10 block";
+                
+                return isHomePage ? (
+                    // OPTION A: Scroll Link (If on Home)
+                    <ScrollLink
+                        key={item.name}
+                        to={item.to}
+                        spy={true}
+                        smooth={true}
+                        offset={-100}
+                        duration={800}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        className={linkClasses}
+                        activeClass="!text-white font-semibold"
+                    >
+                        {item.name}
+                        {hoveredIndex === index && (
+                            <motion.span
+                            layoutId="hover-pill"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute inset-0 rounded-full -z-10 bg-white/10"
+                            />
+                        )}
+                    </ScrollLink>
+                ) : (
+                    // OPTION B: Router Action (If on Case Study)
+                    <div
+                        key={item.name}
+                        onClick={() => handleNavClick(item.to)}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        className={linkClasses}
+                    >
+                        {item.name}
+                        {hoveredIndex === index && (
+                            <motion.span
+                            layoutId="hover-pill"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute inset-0 rounded-full -z-10 bg-white/10"
+                            />
+                        )}
+                    </div>
+                );
+            })}
           </nav>
 
           {/* CTA & MOBILE MENU BUTTON */}
           <div className="flex items-center gap-4 flex-shrink-0 z-50">
             <div className="hidden md:block">
-              <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
-                  <button className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20">
-                    <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
-                      Start Project <ChevronRight size={14} />
-                    </span>
-                  </button>
-              </ScrollLink>
+                {/* Conditional Start Project Button */}
+                {isHomePage ? (
+                    <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
+                        <button className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20">
+                            <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
+                            Start Project <ChevronRight size={14} />
+                            </span>
+                        </button>
+                    </ScrollLink>
+                ) : (
+                    <button 
+                        onClick={() => handleNavClick("contact")}
+                        className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20"
+                    >
+                        <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Start Project <ChevronRight size={14} />
+                        </span>
+                    </button>
+                )}
             </div>
             <button
               onClick={() => setOpen(true)}
@@ -153,24 +207,42 @@ export const Navbar = () => {
               </div>
               <nav className="flex flex-col px-6 py-8 gap-2">
                 {navLinks.map((item, i) => (
-                  <ScrollLink 
-                    key={item.name} 
-                    to={item.to} 
-                    smooth={true} 
-                    offset={-50} 
-                    duration={800} 
-                    onClick={() => setOpen(false)}
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="group flex items-center justify-between p-4 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
-                    >
-                      <span className="text-lg font-medium">{item.name}</span>
-                      <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.div>
-                  </ScrollLink>
+                    // MOBILE LOGIC: Toggle between ScrollLink and onClick
+                    isHomePage ? (
+                        <ScrollLink 
+                            key={item.name} 
+                            to={item.to} 
+                            smooth={true} 
+                            offset={-50} 
+                            duration={800} 
+                            onClick={() => setOpen(false)}
+                        >
+                            <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="group flex items-center justify-between p-4 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                            >
+                            <span className="text-lg font-medium">{item.name}</span>
+                            <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </motion.div>
+                        </ScrollLink>
+                    ) : (
+                        <div 
+                            key={item.name} 
+                            onClick={() => handleNavClick(item.to)}
+                        >
+                            <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="group flex items-center justify-between p-4 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                            >
+                            <span className="text-lg font-medium">{item.name}</span>
+                            <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </motion.div>
+                        </div>
+                    )
                 ))}
               </nav>
             </motion.aside>

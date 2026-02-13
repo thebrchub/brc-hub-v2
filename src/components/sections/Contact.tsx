@@ -116,11 +116,11 @@ export const Contact = () => {
                     </div>
                     <div>
                         <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Email Us</p>
-                        <span className="font-medium">hello@brchub.com</span>
+                        <span className="font-medium">info@brchub.tech</span>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
+                  {/* <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
                     <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
                       <Phone size={20} />
                     </div>
@@ -128,7 +128,7 @@ export const Contact = () => {
                         <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Call Us</p>
                         <span className="font-medium">+91 98765 43210</span>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
                     <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
@@ -136,7 +136,7 @@ export const Contact = () => {
                     </div>
                     <div>
                         <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Visit Us</p>
-                        <span className="font-medium">Ballari, Karnataka, India</span>
+                        <span className="font-medium">Toranagallu, Ballari, Karnataka, India</span>
                     </div>
                   </div>
                 </div>

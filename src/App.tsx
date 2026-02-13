@@ -1,30 +1,70 @@
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { scroller } from 'react-scroll';
 
-import { BrowserRouter as Router} from 'react-router-dom';
 import { Hero } from './components/sections/Hero';
 import { Navbar } from './components/layout/Navbar';
 import { Services } from './components/sections/Services';
 import { Work } from './components/sections/Work';
 import { Contact } from './components/sections/Contact';
 import { Footer } from './components/layout/Footer';
-import { Cursor } from './components/ui/Cursor'; // <--- IMPORT IT
+import { Cursor } from './components/ui/Cursor';
 import { About } from './components/sections/About';
+import { Testimonials } from './components/sections/Testimonials';
+import { CaseStudy } from './pages/CaseStudy';
+import { AllProjects } from './pages/AllProjects'; 
+import { NotFound } from './pages/NotFound'; // <-- 1. IMPORT
+
+// Helper component for the One-Page layout
+const Home = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.scrollTo) {
+      const targetSection = location.state.scrollTo;
+      setTimeout(() => {
+        scroller.scrollTo(targetSection, {
+          duration: 800,
+          delay: 0,
+          smooth: true,
+          offset: -50,
+        });
+      }, 200);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
+
+  return (
+    <>
+      <Hero />
+      <About />
+      <Services />
+      <Work />
+      <Testimonials />
+      <Contact />
+    </>
+  );
+};
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-brc-black text-white selection:bg-brc-orange selection:text-white">
-        
-        {/* ADD THE CURSOR HERE */}
         <Cursor /> 
-
         <Navbar />
+        
         <main>
-          <Hero />
-          <About />
-          <Services />
-          <Work />
-          <Contact />
+          <Routes>
+            {/* Standard Routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/case-study/:id" element={<CaseStudy />} />
+            <Route path="/work" element={<AllProjects />} />
+            
+            {/* 2. CATCH-ALL ROUTE (MUST BE LAST) */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </main>
+        
         <Footer />
       </div>
     </Router>

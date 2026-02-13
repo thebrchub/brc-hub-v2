@@ -1,5 +1,5 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { CheckCircle2, Zap, Users, Heart } from "lucide-react";
 import { SpotlightTiltCard } from "../ui/SpotlightTiltCard";
 
@@ -35,22 +35,45 @@ const values = [
   }
 ];
 
-// Helper Component for the Number Counter
+// Helper Component for the Number Counter with Glow Effect
 const Counter = ({ value, suffix }: { value: number, suffix: string }) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
+    
+    // 1. Set up the motion value starting at 0
+    const count = useMotionValue(0);
+    // 2. Transform it to a rounded number for display
+    const rounded = useTransform(count, (latest) => Math.round(latest));
+
+    useEffect(() => {
+        if (isInView) {
+            // 3. Animate the count value over 2 seconds
+            animate(count, value, { duration: 2, ease: "easeOut" });
+        }
+    }, [isInView, value, count]);
     
     return (
-        <span ref={ref} className="text-4xl md:text-5xl font-display font-bold text-white block mb-2">
-            {isInView ? (
-                <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                >
-                    {value}{suffix}
-                </motion.span>
-            ) : "0"}
+        <span ref={ref} className="text-4xl md:text-5xl font-display font-bold block mb-2">
+            <motion.span
+                // 4. THE GLOW ANIMATION: Starts Orange -> Settles to White
+                initial={{ color: "#ffffff", textShadow: "none" }}
+                animate={isInView ? { 
+                    color: ["#FF5722", "#FF5722", "#FFFFFF"], 
+                    textShadow: ["0 0 25px rgba(255,87,34,0.8)", "0 0 10px rgba(255,87,34,0.5)", "0 0 0px rgba(0,0,0,0)"]
+                } : {}}
+                transition={{ duration: 2.5, times: [0, 0.6, 1] }} // Keeps it orange for 60% of the animation
+            >
+                {rounded}
+            </motion.span>
+            
+            {/* Animate suffix color to match */}
+            <motion.span
+                initial={{ color: "#ffffff" }}
+                animate={isInView ? { color: ["#FF5722", "#FF5722", "#FFFFFF"] } : {}}
+                transition={{ duration: 2.5, times: [0, 0.6, 1] }}
+            >
+                {suffix}
+            </motion.span>
         </span>
     );
 };
@@ -118,7 +141,7 @@ export const About = () => {
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
                         intensity={15} 
-                        // FIX: Explicitly set a bright, visible orange spotlight
+                        // Explicitly set a bright, visible orange spotlight
                         spotlightColor="rgba(255, 87, 34, 0.4)" 
                         className="h-full"
                     >
@@ -139,7 +162,7 @@ export const About = () => {
 
         </div>
 
-        {/* Bottom Tagline - UPDATED FOR TECH + MARKETING */}
+        {/* Bottom Tagline */}
         <div className="text-center pt-12 border-t border-white/5">
             <p className="font-display text-2xl md:text-3xl text-gray-500">
                 "We don't just build Technology. We build <span className="text-white">Growth</span>."

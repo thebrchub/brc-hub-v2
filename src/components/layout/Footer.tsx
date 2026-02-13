@@ -133,17 +133,17 @@ export const Footer = () => {
               <li className="flex items-start gap-3 text-gray-400">
                 <MapPin size={20} className="mt-1 flex-shrink-0 text-brc-orange" />
                 <span className="hover:text-white transition-colors cursor-pointer">
-                    Ballari, Karnataka,<br/>India 583123
+                    Toranagallu, Ballari, Karnataka,<br/>India 583123
                 </span>
               </li>
               <li className="flex items-center gap-3 text-gray-400">
                 <Mail size={20} className="text-brc-orange" />
                 <span className="hover:text-white transition-colors cursor-pointer">info@thebrchub.tech</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-400">
+              {/* <li className="flex items-center gap-3 text-gray-400">
                 <Phone size={20} className="text-brc-orange" />
                 <span className="hover:text-white transition-colors cursor-pointer">+91 98765 43210</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -170,7 +170,8 @@ const FooterLink = ({ href, children }: { href: string; children: React.ReactNod
   <li>
     <a 
       href={href} 
-      className="group flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300"
+      onClick={(e) => e.preventDefault()} // <--- This stops the redirect/jump
+      className="group flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 cursor-pointer"
     >
       <span className="w-0 h-[1px] bg-brc-orange group-hover:w-3 transition-all duration-300" />
       <span className="group-hover:translate-x-1 transition-transform duration-300">
