@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '../data/projects';
 import { Button } from '../components/ui/Button';
+import { SEO } from "../components/SEO";
 
 // --- HELPER: INFINITE MARQUEE ROW ---
 const MarqueeRow = ({ images, reverse = false }: { images: string[]; reverse?: boolean }) => {
@@ -79,6 +80,13 @@ export const CaseStudy = () => {
   };
 
   return (
+    <>
+      <SEO 
+        title={project.title} // e.g. "Powerbird Elevators | BRC Hub"
+        description={project.description} // "Premium animated website for..."
+        image={project.image} // Shows the project thumbnail on WhatsApp/LinkedIn
+        url={`/case-study/${project.id}`}
+      />
     <div className="pt-32 pb-20 min-h-screen overflow-x-hidden">
       <div className="container mx-auto px-6">
         
@@ -262,5 +270,6 @@ export const CaseStudy = () => {
 
       </div>
     </div>
+    </>
   );
 };

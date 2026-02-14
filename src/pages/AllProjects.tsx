@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { projects } from "../data/projects"; // Ensure Project type is exported
 import { SpotlightTiltCard as TiltCard } from "../components/ui/SpotlightTiltCard";
+import { SEO } from "../components/SEO";
 
 // Categories for the filter bar
 const categories = ["All", "SaaS", "Web", "App", "Design"];
@@ -29,7 +30,6 @@ export const AllProjects = () => {
   const ProjectCardContent = ({ project }: { project: typeof projects[0] }) => {
     
     // LOGIC: Only show arrow if there is somewhere to go (Case Study OR Live URL)
-    // This automatically hides it for 'Gita Path' since it has neither.
     const showArrow = caseStudyIds.includes(project.id) || project.liveUrl;
 
     return (
@@ -82,6 +82,11 @@ export const AllProjects = () => {
   };
 
   return (
+    <>
+      <SEO 
+        title="Software Development & Marketing Agency"
+        description="BRC Hub is a full-service agency in Ballari providing Web Development, App Development, and Digital Marketing solutions to scale your business."
+      />
     <div className="min-h-screen bg-brc-black pt-32 pb-20">
       <div className="container mx-auto px-6">
         
@@ -141,7 +146,13 @@ export const AllProjects = () => {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Link to={`/case-study/${project.id}`} className="block h-full">
+                    {/* --- THE FIX IS HERE --- */}
+                    {/* Added state={{ from: "/work" }} so the Back button works correctly */}
+                    <Link 
+                      to={`/case-study/${project.id}`} 
+                      state={{ from: "/work" }} 
+                      className="block h-full"
+                    >
                         <ProjectCardContent project={project} />
                     </Link>
                   </motion.div>
@@ -188,5 +199,6 @@ export const AllProjects = () => {
 
       </div>
     </div>
+    </>
   );
 };

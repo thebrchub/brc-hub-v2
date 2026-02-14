@@ -100,25 +100,28 @@ export const Work = () => {
                 viewport={{ once: true }}
                 className="font-display text-4xl md:text-6xl font-bold text-white mb-6"
               >
-                Selected <span className="text-gray-600">Work.</span>
+                {/* CHANGED HEADING HERE */}
+                Featured <span className="text-gray-600">Projects.</span>
               </motion.h2>
            </div>
+           
+           {/* CHANGED SCROLL TEXT TO CLICKABLE LINK */}
            <div className="hidden md:block mb-4">
-              <span className="text-gray-500 text-sm tracking-widest uppercase border-b border-gray-800 pb-2">
-                  Scroll to explore
-              </span>
+              <Link to="/work" className="group flex items-center gap-2 text-gray-500 hover:text-brc-orange transition-colors text-sm tracking-widest uppercase border-b border-gray-800 hover:border-brc-orange pb-2">
+                  View All Projects 
+                  <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
            </div>
         </div>
 
         {/* Dynamic Projects List - LIMITED TO FIRST 5 */}
         <div className="relative z-10">
-            {/* .slice(0, 5) ensures we only show up to the Graphic Design project */}
             {projects.slice(0, 5).map((project, index) => (
                 <ProjectCard key={project.id} project={project} index={index} />
             ))}
         </div>
 
-        {/* 'More Work' Button */}
+        {/* 'More Work' Button (Kept at bottom too for mobile/convenience) */}
         <div className="flex justify-center mt-12">
             <Link to="/work">
                 <Button size="lg" className="px-12">

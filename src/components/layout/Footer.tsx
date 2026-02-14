@@ -1,14 +1,15 @@
 import { Instagram, Linkedin, Facebook, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
-import { Link as ScrollLink } from 'react-scroll';
+import { scroller } from 'react-scroll'; // Import scroller
+import { useLocation, useNavigate } from 'react-router-dom'; // Import hooks
 
 // Custom X (formerly Twitter) Logo Component
 const XLogo = ({ className }: { className?: string }) => (
   <svg 
     viewBox="0 0 24 24" 
     aria-hidden="true" 
-    className={`w-5 h-5 fill-current ${className}`} // fill-current ensures it takes the parent's text color
+    className={`w-5 h-5 fill-current ${className}`} 
   >
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
@@ -16,6 +17,23 @@ const XLogo = ({ className }: { className?: string }) => (
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // --- SMART NAVIGATION HANDLER ---
+  const handleStartProject = () => {
+    if (location.pathname === '/') {
+      // If already on Home, just scroll
+      scroller.scrollTo("contact", {
+        smooth: true,
+        duration: 800,
+        offset: -50,
+      });
+    } else {
+      // If on another page, go Home and tell it to scroll
+      navigate('/', { state: { scrollTo: 'contact' } });
+    }
+  };
 
   return (
     <footer className="relative bg-brc-black pt-24 pb-12 overflow-hidden border-t border-white/5">
@@ -69,12 +87,15 @@ export const Footer = () => {
             transition={{ delay: 0.2 }}
             className="flex-shrink-0"
           >
-             <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
-                 <Button size="lg" className="group h-20 px-12 text-xl rounded-full shadow-2xl shadow-orange-500/20 hover:shadow-orange-500/40">
-                   Start a Project 
-                   <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                 </Button>
-             </ScrollLink>
+              {/* UPDATED BUTTON WITH CLICK HANDLER */}
+              <Button 
+                onClick={handleStartProject}
+                size="lg" 
+                className="group h-20 px-12 text-xl rounded-full shadow-2xl shadow-orange-500/20 hover:shadow-orange-500/40"
+              >
+                Start a Project 
+                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+              </Button>
           </motion.div>
         </div>
 
@@ -84,7 +105,6 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="md:col-span-4 space-y-6">
             <div className="flex items-center gap-3">
-                {/* RESTORED LOGO IMAGE */}
                 <img 
                     src="/logo.svg" 
                     alt="BRC Hub" 
@@ -98,7 +118,6 @@ export const Footer = () => {
             <div className="flex items-center gap-4 pt-4">
               <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/thebrchub" />
               <SocialIcon icon={<Linkedin size={20} />} href="https://www.linkedin.com/company/the-brc-hub" />
-              {/* REPLACED TWITTER BIRD WITH X LOGO */}
               <SocialIcon icon={<XLogo />} href="https://twitter.com/thebrchub" />
               <SocialIcon icon={<Facebook size={20} />} href="https://www.facebook.com/thebrchub" />
             </div>
@@ -140,10 +159,6 @@ export const Footer = () => {
                 <Mail size={20} className="text-brc-orange" />
                 <span className="hover:text-white transition-colors cursor-pointer">info@thebrchub.tech</span>
               </li>
-              {/* <li className="flex items-center gap-3 text-gray-400">
-                <Phone size={20} className="text-brc-orange" />
-                <span className="hover:text-white transition-colors cursor-pointer">+91 98765 43210</span>
-              </li> */}
             </ul>
           </div>
         </div>
@@ -170,7 +185,7 @@ const FooterLink = ({ href, children }: { href: string; children: React.ReactNod
   <li>
     <a 
       href={href} 
-      onClick={(e) => e.preventDefault()} // <--- This stops the redirect/jump
+      onClick={(e) => e.preventDefault()} 
       className="group flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 cursor-pointer"
     >
       <span className="w-0 h-[1px] bg-brc-orange group-hover:w-3 transition-all duration-300" />

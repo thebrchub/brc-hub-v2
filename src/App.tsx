@@ -13,7 +13,8 @@ import { About } from './components/sections/About';
 import { Testimonials } from './components/sections/Testimonials';
 import { CaseStudy } from './pages/CaseStudy';
 import { AllProjects } from './pages/AllProjects'; 
-import { NotFound } from './pages/NotFound'; // <-- 1. IMPORT
+import { NotFound } from './pages/NotFound'; 
+import { SEO } from './components/SEO'; // <--- 1. Import SEO
 
 // Helper component for the One-Page layout
 const Home = () => {
@@ -36,6 +37,12 @@ const Home = () => {
 
   return (
     <>
+      {/* 2. Add SEO Component Here for the Home Page */}
+      <SEO 
+        title="Software Development & Marketing Agency"
+        description="BRC Hub is a full-service agency in Ballari providing Web & App Development, SaaS Development and Digital Marketing solutions to scale your business."
+      />
+      
       <Hero />
       <About />
       <Services />
@@ -60,7 +67,7 @@ function App() {
             <Route path="/case-study/:id" element={<CaseStudy />} />
             <Route path="/work" element={<AllProjects />} />
             
-            {/* 2. CATCH-ALL ROUTE (MUST BE LAST) */}
+            {/* Catch-all Route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

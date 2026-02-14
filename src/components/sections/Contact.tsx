@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Send, Mail, MapPin } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
 
-// 1. Reusable "Tech" Input Component (Laser Focus)
+// 1. Reusable "Tech" Input Component
 const TechInput = ({ label, type = "text", ...props }: any) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="relative mb-2 group">
+    <div className="relative mb-2 group w-full">
       {/* Label that moves */}
       <label 
         className={`absolute left-4 transition-all duration-300 pointer-events-none z-10
@@ -62,7 +62,30 @@ const services = [
 ];
 
 export const Contact = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
+
+  // --- PHONE VALIDATION HANDLER ---
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers
+    if (!/^\d*$/.test(value)) return;
+    // Limit to 10 digits
+    if (value.length > 10) return;
+    
+    setFormData({ ...formData, phone: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("submitting");
+
+    // Simulate network request (2 seconds)
+    setTimeout(() => {
+      setFormStatus("success");
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+    }, 2000);
+  };
 
   return (
     <section id="contact" className="relative py-24 bg-brc-black border-t border-white/5 overflow-hidden">
@@ -102,10 +125,13 @@ export const Contact = () => {
             </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        {/* LAYOUT GRID */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch">
           
-          {/* LEFT SIDE: Contact Info (Clean & Simple) */}
-          <div className="lg:col-span-4 space-y-8 lg:pt-10">
+          {/* LEFT COLUMN CONTAINER */}
+          <div className="w-full lg:w-1/3 flex flex-col gap-6">
+             
+             {/* 1. Contact Card */}
              <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm">
                 <h3 className="text-xl font-bold text-white mb-6 font-display">Contact Info</h3>
                 
@@ -120,16 +146,6 @@ export const Contact = () => {
                     </div>
                   </div>
 
-                  {/* <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
-                    <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
-                      <Phone size={20} />
-                    </div>
-                    <div>
-                        <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Call Us</p>
-                        <span className="font-medium">+91 98765 43210</span>
-                    </div>
-                  </div> */}
-
                   <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
                     <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
                       <MapPin size={20} />
@@ -141,70 +157,184 @@ export const Contact = () => {
                   </div>
                 </div>
              </div>
+
+             {/* DESKTOP "What happens next?" (Hidden on Mobile) */}
+             <div className="hidden lg:flex flex-col justify-center p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm flex-grow">
+                <h3 className="text-xl font-bold text-white mb-6 font-display">What happens next?</h3>
+                <ul className="space-y-8">
+                   <li className="flex gap-4">
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">1</span>
+                      <div>
+                         <h4 className="text-white font-medium text-sm">We analyze your request</h4>
+                         <p className="text-gray-500 text-xs mt-1">Our team reviews your requirements within 24 hours.</p>
+                      </div>
+                   </li>
+                   <li className="flex gap-4">
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">2</span>
+                      <div>
+                         <h4 className="text-white font-medium text-sm">Free Consultation</h4>
+                         <p className="text-gray-500 text-xs mt-1">We schedule a quick call to discuss strategy & budget.</p>
+                      </div>
+                   </li>
+                </ul>
+             </div>
+
           </div>
 
-          {/* RIGHT SIDE: The Form (Combined Tech Inputs + Pill Select) */}
+          {/* RIGHT COLUMN: The Form Container */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-8 bg-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-sm shadow-2xl"
+            className="w-full lg:w-2/3 bg-white/[0.02] border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-sm shadow-2xl flex flex-col relative overflow-hidden min-h-[600px]"
           >
-             <form>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  {/* Name (Laser Input) */}
-                  <TechInput 
-                    label="Your Name" 
-                    value={formData.name}
-                    onChange={(e: any) => setFormData({...formData, name: e.target.value})}
-                  />
-                  {/* Email (Laser Input) */}
-                  <TechInput 
-                    label="Your Email" 
-                    type="email"
-                    value={formData.email}
-                    onChange={(e: any) => setFormData({...formData, email: e.target.value})}
-                  />
-                </div>
+             <AnimatePresence mode="wait">
+                {formStatus === "success" ? (
+                   /* --- SUCCESS STATE --- */
+                   <motion.div 
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-20 bg-brc-black/50 backdrop-blur-md"
+                   >
+                      <motion.div 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className="w-24 h-24 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-6 border border-green-500/50"
+                      >
+                         <CheckCircle2 size={48} />
+                      </motion.div>
+                      <h3 className="text-3xl font-display font-bold text-white mb-2">Message Received!</h3>
+                      <p className="text-gray-400 max-w-md">
+                         Thanks for reaching out, {formData.name || 'Partner'}. Our team is reviewing your details and will get back to you within 24 hours.
+                      </p>
+                      <Button 
+                        onClick={() => setFormStatus("idle")} 
+                        variant="outline" 
+                        className="mt-8 border-white/20"
+                      >
+                        Send Another Message
+                      </Button>
+                   </motion.div>
+                ) : (
+                   /* --- FORM STATE --- */
+                   <motion.form 
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onSubmit={handleSubmit}
+                      className="h-full flex flex-col justify-between"
+                   >
+                      <div>
+                          {/* ROW 1: Name & Email */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <TechInput 
+                              label="Your Name" 
+                              required
+                              value={formData.name}
+                              onChange={(e: any) => setFormData({...formData, name: e.target.value})}
+                            />
+                            <TechInput 
+                              label="Your Email" 
+                              type="email"
+                              required
+                              value={formData.email}
+                              onChange={(e: any) => setFormData({...formData, email: e.target.value})}
+                            />
+                          </div>
 
-                {/* Service Pills (From Old Code - Kept because it's great UX) */}
-                <div className="mb-8">
-                    <label className="text-sm font-semibold text-gray-400 uppercase tracking-wider block mb-4">I'm interested in...</label>
-                    <div className="flex flex-wrap gap-3">
-                        {services.map((service) => (
-                            <label key={service} className="cursor-pointer group">
-                                <input type="checkbox" className="peer sr-only" />
-                                <span className="inline-block px-5 py-2.5 rounded-full border border-white/10 bg-black/40 text-gray-400 
-                                    group-hover:bg-white/10 group-hover:text-white 
-                                    peer-checked:bg-brc-orange peer-checked:text-white peer-checked:border-brc-orange peer-checked:shadow-[0_0_15px_rgba(255,87,34,0.4)]
-                                    transition-all duration-300 select-none text-sm font-medium">
-                                    {service}
-                                </span>
-                            </label>
-                        ))}
-                    </div>
-                </div>
-                
-                {/* Message (Laser Input) */}
-                <TechInput 
-                  label="Tell us about your project..." 
-                  type="textarea"
-                  value={formData.message}
-                  onChange={(e: any) => setFormData({...formData, message: e.target.value})}
-                />
+                          {/* ROW 2: Phone & Company (Balanced) */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                             <TechInput 
+                                label="Phone Number (10 Digits)" 
+                                type="tel"
+                                value={formData.phone}
+                                onChange={handlePhoneChange} // Uses our validation handler
+                             />
+                             <TechInput 
+                                label="Company / Website (Optional)" 
+                                type="text"
+                                value={formData.company}
+                                onChange={(e: any) => setFormData({...formData, company: e.target.value})}
+                             />
+                          </div>
 
-                {/* Submit Area */}
-                <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <p className="text-xs text-gray-500 order-2 md:order-1 text-center md:text-left">
-                        By sending this, you agree to our <span className="underline hover:text-white cursor-pointer">Privacy Policy</span>.
-                    </p>
-                    <Button size="lg" className="w-full md:w-auto min-w-[200px] order-1 md:order-2 group">
-                        Send Message 
-                        <Send size={16} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </Button>
-                </div>
-             </form>
+                          <div className="mb-8">
+                              <label className="text-sm font-semibold text-gray-400 uppercase tracking-wider block mb-4">I'm interested in...</label>
+                              <div className="flex flex-wrap gap-3">
+                                  {services.map((service) => (
+                                      <label key={service} className="cursor-pointer group">
+                                          <input type="checkbox" className="peer sr-only" />
+                                          <span className="inline-block px-5 py-2.5 rounded-full border border-white/10 bg-black/40 text-gray-400 
+                                              group-hover:bg-white/10 group-hover:text-white 
+                                              peer-checked:bg-brc-orange peer-checked:text-white peer-checked:border-brc-orange peer-checked:shadow-[0_0_15px_rgba(255,87,34,0.4)]
+                                              transition-all duration-300 select-none text-sm font-medium">
+                                              {service}
+                                          </span>
+                                      </label>
+                                  ))}
+                              </div>
+                          </div>
+                          
+                          <TechInput 
+                            label="Tell us about your project..." 
+                            type="textarea"
+                            required
+                            value={formData.message}
+                            onChange={(e: any) => setFormData({...formData, message: e.target.value})}
+                          />
+                      </div>
+
+                      <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                          <p className="text-xs text-gray-500 order-2 md:order-1 text-center md:text-left">
+                              By sending this, you agree to our <span className="underline hover:text-white cursor-pointer">Privacy Policy</span>.
+                          </p>
+                          <Button 
+                            disabled={formStatus === "submitting"}
+                            size="lg" 
+                            className="w-full md:w-auto min-w-[200px] order-1 md:order-2 group disabled:opacity-70 disabled:cursor-not-allowed"
+                          >
+                              {formStatus === "submitting" ? (
+                                <>
+                                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                  Sending...
+                                </>
+                              ) : (
+                                <>
+                                  Send Message 
+                                  <Send size={16} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                </>
+                              )}
+                          </Button>
+                      </div>
+                   </motion.form>
+                )}
+             </AnimatePresence>
           </motion.div>
+
+          {/* MOBILE ONLY VERSION of "What happens next?" (Shown BELOW form on mobile) */}
+          <div className="lg:hidden p-8 rounded-3xl bg-white/[0.02] border border-white/10 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-white mb-6 font-display">What happens next?</h3>
+                <ul className="space-y-6">
+                   <li className="flex gap-4">
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">1</span>
+                      <div>
+                         <h4 className="text-white font-medium text-sm">We analyze your request</h4>
+                         <p className="text-gray-500 text-xs mt-1">Our team reviews your requirements within 24 hours.</p>
+                      </div>
+                   </li>
+                   <li className="flex gap-4">
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">2</span>
+                      <div>
+                         <h4 className="text-white font-medium text-sm">Free Consultation</h4>
+                         <p className="text-gray-500 text-xs mt-1">We schedule a quick call to discuss strategy & budget.</p>
+                      </div>
+                   </li>
+                </ul>
+          </div>
 
         </div>
       </div>

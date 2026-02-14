@@ -77,7 +77,7 @@ export const projects: Project[] = [
     category: "Web",
     timeline: "3 Weeks", 
     client: "LVC Legalvala Consultancy LLP",
-    description: "High-performance corporate site.",
+    description: "High-performance corporate site along with appointment system.",
     fullDescription: "A complete rebrand and digital presence for a top legal firm.",
     challenge: "Old site was slow and non-responsive.",
     solution: "Next.js site optimized for SEO and performance.",
@@ -98,18 +98,22 @@ export const projects: Project[] = [
   // --- APPS ---
   // --- APPS ---
   {
-    id: "vedic-astro",
+    id: "payzo",
     title: "Payzo",
     category: "App",
     client: "BRC Hub (Internal)",
     timeline: "Under Development", 
-    description: "AI-powered horoscope & astrology application.",
-    fullDescription: "An internal venture by BRC Hub to bring personalized astrology readings to users using AI. Features daily horoscopes, kundli matching, and AI chat.",
-    challenge: "Building a scalable backend to handle real-time astrological calculations.",
-    solution: "Developed a cross-platform mobile app using Flutter with a robust Java backend.",
-    results: ["Prototype Phase Completed", "Backend Architecture Finalized"],
-    stack: ["Flutter", "Java", "AI"], 
-    image: "/portfolio/payzo/thumb.png"
+    description: "Smart expense tracker & credit card offer optimizer.",
+    fullDescription: "An intelligent financial companion designed to maximize savings. Payzo tracks daily expenses and manages credit card portfolios. Its standout feature is the 'Best Card Finder': users can paste product links from Amazon, Flipkart, or Snapdeal, and the app instantly analyzes valid bank offers to suggest which saved credit card provides the maximum discount.",
+    challenge: "Real-time parsing of dynamic bank offers across multiple e-commerce platforms and mapping them accurately to user-specific cards.",
+    solution: "Developed a cross-platform Flutter app with a Java backend that aggregates live offer data and runs a comparison algorithm to calculate the lowest net effective price.",
+    results: ["Expense Tracking Module Ready", "Offer Engine Logic Finalized"],
+    stack: ["Flutter", "Java", "Automation"], 
+    image: "/portfolio/payzo/thumb.png",
+    gallery: [
+        "/portfolio/payzo/1.png", 
+        "/portfolio/payzo/2.png", 
+    ]
   },
 
   // --- DESIGN (Kept as is) ---
