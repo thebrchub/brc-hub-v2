@@ -41,7 +41,7 @@ const Home = () => {
     <>
       {/* 2. Add SEO Component Here for the Home Page */}
       <SEO 
-        title="Software Development & Marketing Agency"
+        title="BRC Hub | Premium Tech & Growth Agency"
         description="BRC Hub is a full-service agency in Ballari providing Web & App Development, SaaS Development and Digital Marketing solutions to scale your business."
       />
       
