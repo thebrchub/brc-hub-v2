@@ -15,6 +15,8 @@ import { CaseStudy } from './pages/CaseStudy';
 import { AllProjects } from './pages/AllProjects'; 
 import { NotFound } from './pages/NotFound'; 
 import { SEO } from './components/SEO'; // <--- 1. Import SEO
+import { PrivacyPolicy } from './pages/PrivacyPolicy'; // <--- Import
+import { TermsOfService } from './pages/TermsOfService'; // <--- Import
 
 // Helper component for the One-Page layout
 const Home = () => {
@@ -66,6 +68,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/case-study/:id" element={<CaseStudy />} />
             <Route path="/work" element={<AllProjects />} />
+
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             
             {/* Catch-all Route */}
             <Route path="*" element={<NotFound />} />

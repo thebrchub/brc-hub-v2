@@ -2,7 +2,8 @@ import { Instagram, Linkedin, Facebook, Mail, MapPin, ArrowRight } from 'lucide-
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { scroller } from 'react-scroll'; // Import scroller
-import { useLocation, useNavigate } from 'react-router-dom'; // Import hooks
+import { useLocation, useNavigate, Link } from 'react-router-dom'; // Import hooks
+
 
 // Custom X (formerly Twitter) Logo Component
 const XLogo = ({ className }: { className?: string }) => (
@@ -169,11 +170,14 @@ export const Footer = () => {
             © {currentYear} Blazing Render Creation Hub LLP. All rights reserved.
           </p>
           <div className="flex items-center gap-8 text-sm text-gray-500">
-            <a href="#" className="hover:text-brc-orange transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-brc-orange transition-colors">Terms of Service</a>
+            <Link to="/privacy-policy" className="hover:text-brc-orange transition-colors">
+                Privacy Policy
+            </Link>
+            <Link to="/terms-of-service" className="hover:text-brc-orange transition-colors">
+                Terms of Service
+            </Link>
           </div>
         </div>
-
       </div>
     </footer>
   );
