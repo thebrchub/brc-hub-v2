@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
-import { Link } from "react-router-dom"; // <--- Imported Link
+import { Link } from "react-router-dom";
 import { buildInquiryPayload, sendInquiryEmail } from "../../utils/sendEmail";
 
 // 1. Reusable "Tech" Input Component
@@ -91,6 +91,15 @@ export const Contact = () => {
     e.preventDefault();
     setFormStatus("submitting");
     setSubmitError("");
+
+    // --- UPDATED VALIDATION ---
+    // If phone is NOT empty, ensure it is 10 digits.
+    // If it IS empty, let it pass (Optional).
+    if (formData.phone.length > 0 && formData.phone.length !== 10) {
+        setFormStatus("error");
+        setSubmitError("Please enter a valid 10-digit number or leave it blank.");
+        return;
+    }
 
     try {
       const payload = buildInquiryPayload({
@@ -234,7 +243,7 @@ export const Contact = () => {
                       </motion.div>
                       <h3 className="text-3xl font-display font-bold text-white mb-2">Message Received!</h3>
                       <p className="text-gray-400 max-w-md">
-                         Thanks for reaching out, {submittedName || "Partner"}. Our team is reviewing your details and will get back to you within 24 hours.
+                         Thanks for reaching out, {submittedName || 'Partner'}. Our team is reviewing your details and will get back to you within 24 hours.
                       </p>
                       <Button 
                         onClick={() => {
@@ -278,7 +287,7 @@ export const Contact = () => {
                           {/* ROW 2: Phone & Company (Balanced) */}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                              <TechInput 
-                                label="Phone Number (10 Digits)" 
+                                label="Phone Number (Optional)" 
                                 type="tel"
                                 value={formData.phone}
                                 onChange={handlePhoneChange} // Uses our validation handler
@@ -296,9 +305,9 @@ export const Contact = () => {
                               <div className="flex flex-wrap gap-3">
                                   {services.map((service) => (
                                       <label key={service} className="cursor-pointer group">
-                                          <input
-                                            type="checkbox"
-                                            className="peer sr-only"
+                                          <input 
+                                            type="checkbox" 
+                                            className="peer sr-only" 
                                             checked={selectedServices.includes(service)}
                                             onChange={() => toggleService(service)}
                                           />
@@ -322,7 +331,9 @@ export const Contact = () => {
                           />
 
                           {formStatus === "error" && (
-                            <p className="mt-4 text-sm text-red-400">{submitError}</p>
+                            <p className="mt-4 text-sm text-red-400 bg-red-400/10 p-2 rounded border border-red-400/20 text-center">
+                                {submitError}
+                            </p>
                           )}
                       </div>
 

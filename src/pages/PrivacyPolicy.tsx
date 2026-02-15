@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { SEO } from "../components/SEO";
+import { motion } from "framer-motion"; // <--- 1. Import Framer Motion
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const PrivacyPolicy = () => {
   useEffect(() => {
@@ -12,8 +15,23 @@ export const PrivacyPolicy = () => {
         title="Privacy Policy" 
         description="Privacy Policy for BRC Hub - How we handle your data."
       />
-      <div className="pt-32 pb-24 min-h-screen bg-brc-black text-gray-300">
+      
+      {/* 2. Wrap content in motion.div */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="pt-32 pb-24 min-h-screen bg-brc-black text-gray-300"
+      >
         <div className="container mx-auto px-6 max-w-4xl">
+          
+          {/* Optional: Add a Back Button for better UX */}
+          <Link to="/" className="inline-flex items-center text-gray-500 hover:text-brc-orange mb-8 transition-colors group">
+             <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
+             Back Home
+          </Link>
+
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8">Privacy Policy</h1>
           <p className="text-sm text-gray-500 mb-12">Last Updated: February 2026</p>
 
@@ -55,7 +73,7 @@ export const PrivacyPolicy = () => {
             </section>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
