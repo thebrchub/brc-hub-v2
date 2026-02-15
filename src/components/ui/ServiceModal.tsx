@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { X, CheckCircle2, ArrowUpRight, ArrowLeft, Send, Loader2, Check } from "lucide-react";
@@ -48,56 +48,34 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
   const [view, setView] = useState<"details" | "inquiry">("details"); 
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submitError, setSubmitError] = useState("");
-  
-  // Updated State to include phone and company
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
   
-  // Store scroll position to restore it later
-  const scrollPosition = useRef(0);
+  // REMOVED: scrollPosition ref (caused the jump)
 
   useEffect(() => {
     setMounted(true);
     
     if (isOpen) {
-      // 1. Save current scroll position
-      scrollPosition.current = window.scrollY;
+      // 1. Lock Body Scroll (Standard method, no jumping)
+      document.body.style.overflow = 'hidden';
       
-      // 2. Lock Body (Standard)
+      // 2. Prevent layout shift (Desktop)
       if (window.innerWidth > 768) {
           const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
           document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
-      
-      // 3. LOCK BODY (Mobile Strict)
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed'; // Forces iOS to lock
-      document.body.style.top = `-${scrollPosition.current}px`; // Keep visual position
-      document.body.style.width = '100%';
 
       setView("details");
       setFormStatus("idle");
       setSubmitError("");
     } else {
-      // 4. Unlock Body
-      const top = document.body.style.top;
+      // 3. Unlock Body
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
       document.body.style.paddingRight = '';
-      
-      // 5. Restore scroll position instantly
-      if (top) {
-        window.scrollTo(0, parseInt(top || '0') * -1);
-      }
     }
     
     return () => {
-        // Cleanup on unmount
         document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
         document.body.style.paddingRight = '';
     }
   }, [isOpen]);
@@ -111,10 +89,8 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
     }
   }, [view, service]);
 
-  // --- PHONE VALIDATION HANDLER ---
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Only allow numbers and limit to 10 digits
     if (/^\d*$/.test(value) && value.length <= 10) {
       setFormData({ ...formData, phone: value });
     }
@@ -151,12 +127,13 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* BACKDROP: touch-none prevents scroll passing through */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998] touch-none" // Added touch-none
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998] touch-none" 
           />
 
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-0 pointer-events-none">
@@ -165,12 +142,14 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              // ADDED: overscroll-contain to stop mobile scroll chaining
               className="
                 w-[90vw] md:w-full md:max-w-4xl 
                 max-h-[85vh] md:max-h-[90vh] 
                 bg-[#0A0A0A] border border-white/10 
                 rounded-2xl md:rounded-3xl shadow-2xl 
                 overflow-hidden flex flex-col pointer-events-auto relative 
+                overscroll-contain
               "
             >
                
@@ -292,7 +271,6 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
                               </div>
                           ) : (
                               <form onSubmit={handleSubmit} className="max-w-2xl mx-auto w-full">
-                                  {/* ROW 1: Name & Email */}
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                       <ModalInput 
                                         label="Your Name" 
@@ -309,13 +287,12 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
                                       />
                                   </div>
 
-                                  {/* ROW 2: Phone & Company (Balanced) */}
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                       <ModalInput 
                                         label="Phone Number (10 Digits)" 
                                         type="tel"
                                         value={formData.phone}
-                                        onChange={handlePhoneChange} // Validated Input
+                                        onChange={handlePhoneChange}
                                       />
                                       <ModalInput 
                                         label="Company / Website (Optional)" 

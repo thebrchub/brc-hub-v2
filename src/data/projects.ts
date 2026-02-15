@@ -15,9 +15,9 @@ export interface Project {
   liveUrl?: string;   // Link for live websites
 }
 
-// Helper to generate the 21 graphic design images automatically
-// Creates: ["/portfolio/graphics/1.png", "/portfolio/graphics/2.png", ... "/portfolio/graphics/21.png"]
-const graphicGallery = Array.from({ length: 17 }, (_, i) => `/portfolio/graphics/${i + 1}.png`);
+
+// Creates: ["/portfolio/graphics/1.webp", "/portfolio/graphics/2.webp", ... "/portfolio/graphics/21.webp"]
+const graphicGallery = Array.from({ length: 17 }, (_, i) => `/portfolio/graphics/${i + 1}.webp`);
 
 export const projects: Project[] = [
   // --- FEATURED SAAS ---
@@ -37,12 +37,12 @@ export const projects: Project[] = [
       "Zero manual data entry required"
     ],
     stack: ["React (Vite)", "Node.js", "Benk-Y Engine", "Gemini AI", "Tailwind"],
-    image: "/portfolio/itat.png",
+    image: "/portfolio/itat.webp",
     gallery: [
-        "/portfolio/lawwise/1.png", 
-        "/portfolio/lawwise/2.png", 
-        "/portfolio/lawwise/3.png",  
-        "/portfolio/lawwise/4.png"
+        "/portfolio/lawwise/1.webp", 
+        "/portfolio/lawwise/2.webp", 
+        "/portfolio/lawwise/3.webp",  
+        "/portfolio/lawwise/4.webp"
     ]
   },
 
@@ -59,13 +59,13 @@ export const projects: Project[] = [
     solution: "We engineered a custom React application with complex Framer Motion animations, a unique preloader, and a responsive glassmorphism design.",
     results: ["Enhanced Brand Image", "Increased Service Inquiries"],
     stack: ["React", "Tailwind CSS", "Framer Motion"],
-    image: "/portfolio/powerbird/thumb.png",
+    image: "/portfolio/powerbird/thumb.webp",
     gallery: [
-        "/portfolio/powerbird/1.png",
-        "/portfolio/powerbird/2.png", 
-        "/portfolio/powerbird/3.png",  
-        "/portfolio/powerbird/4.png",
-        "/portfolio/powerbird/5.png"
+        "/portfolio/powerbird/1.webp",
+        "/portfolio/powerbird/2.webp", 
+        "/portfolio/powerbird/3.webp",  
+        "/portfolio/powerbird/4.webp",
+        "/portfolio/powerbird/5.webp"
     ],
     liveUrl: "https://powerbird-elevators.brchub.me/" 
   },
@@ -83,14 +83,14 @@ export const projects: Project[] = [
     solution: "Next.js site optimized for SEO and performance.",
     results: ["40% Traffic Increase", "Doubled lead generation"],
     stack: ["Next.js", "Tailwind", "Framer Motion"],
-    image: "/portfolio/byxbyte/thumb.png",
+    image: "/portfolio/byxbyte/thumb.webp",
     gallery: [
-        "/portfolio/byxbyte/1.png", 
-        "/portfolio/byxbyte/2.png", 
-        "/portfolio/byxbyte/3.png",  
-        "/portfolio/byxbyte/4.png",
-        "/portfolio/byxbyte/5.png",
-        "/portfolio/byxbyte/6.png",
+        "/portfolio/byxbyte/1.webp", 
+        "/portfolio/byxbyte/2.webp", 
+        "/portfolio/byxbyte/3.webp",  
+        "/portfolio/byxbyte/4.webp",
+        "/portfolio/byxbyte/5.webp",
+        "/portfolio/byxbyte/6.webp",
     ],
     liveUrl: "https://byxbytemedia.brchub.me/" 
   },
@@ -109,10 +109,10 @@ export const projects: Project[] = [
     solution: "Developed a cross-platform Flutter app with a Java backend that aggregates live offer data and runs a comparison algorithm to calculate the lowest net effective price.",
     results: ["Expense Tracking Module Ready", "Offer Engine Logic Finalized"],
     stack: ["Flutter", "Java", "Automation"], 
-    image: "/portfolio/payzo/thumb.png",
+    image: "/portfolio/payzo/thumb.webp",
     gallery: [
-        "/portfolio/payzo/1.png", 
-        "/portfolio/payzo/2.png", 
+        "/portfolio/payzo/1.webp", 
+        "/portfolio/payzo/2.webp", 
     ]
   },
 
@@ -129,7 +129,7 @@ export const projects: Project[] = [
     solution: "We combine design psychology with marketing strategy.",
     results: ["Delivered 100+ Creatives", "High CTR on Ad Campaigns"],
     stack: ["Photoshop", "Illustrator", "Figma", "Canva"],
-    image: "/portfolio/graphics/thumb.png",
+    image: "/portfolio/graphics/thumb.webp",
     gallery: graphicGallery 
   },
 
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     solution: "Custom website built with vanilla JavaScript for maximum performance.",
     results: ["Increased Local Inquiries", "Fast Page Load Speeds"],
     stack: ["JavaScript", "HTML", "CSS"],
-    image: "/portfolio/nonfeature/legalvala.png",
+    image: "/portfolio/nonfeature/legalvala.webp",
     liveUrl: "https://legalvala.com"
   },
 
@@ -163,7 +163,7 @@ export const projects: Project[] = [
     solution: "Rapid development using React to ensure a modern, responsive UI.",
     results: ["Launched on Schedule", "Mobile Responsive"],
     stack: ["React", "JavaScript", "Tailwind"],
-    image: "/portfolio/nonfeature/quantacel.png",
+    image: "/portfolio/nonfeature/quantacel.webp",
     liveUrl: "https://orvexa.brchub.me/"
   },
 
@@ -179,7 +179,7 @@ export const projects: Project[] = [
     solution: "Clean, lightweight website using pure HTML/CSS.",
     results: ["Brand Identity Established"],
     stack: ["HTML", "CSS"],
-    image: "/portfolio/nonfeature/digivala.png",
+    image: "/portfolio/nonfeature/digivala.webp",
     liveUrl: "https://digivala.in/"
   },
 
@@ -195,7 +195,7 @@ export const projects: Project[] = [
     solution: "Standard semantic HTML structure with custom styling.",
     results: ["Added to Portfolio"],
     stack: ["HTML", "CSS"],
-    image: "/portfolio/nonfeature/if.png",
+    image: "/portfolio/nonfeature/if.webp",
     liveUrl: "https://industrialforge.brchub.me/"
   },
 
@@ -211,6 +211,6 @@ export const projects: Project[] = [
     solution: "Cross-platform development using Flutter backed by Java.",
     results: ["UI/UX Finalized"],
     stack: ["Flutter", "Java"],
-    image: "/portfolio/nonfeature/gita.png"
+    image: "/portfolio/nonfeature/gita.webp"
   }
 ];
