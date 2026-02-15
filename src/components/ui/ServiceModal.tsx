@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { X, CheckCircle2, ArrowUpRight, ArrowLeft, Send, Loader2, Check } from "lucide-react";
 import { Button } from "./Button";
+import { buildInquiryPayload, sendInquiryEmail } from "../../utils/sendEmail";
 
 // --- 1. Internal Components (Input Field) ---
 const ModalInput = ({ label, type = "text", ...props }: any) => {
@@ -45,7 +46,8 @@ interface ServiceModalProps {
 export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
   const [mounted, setMounted] = useState(false);
   const [view, setView] = useState<"details" | "inquiry">("details"); 
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [submitError, setSubmitError] = useState("");
   
   // Updated State to include phone and company
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
@@ -60,6 +62,7 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
       document.body.style.overflow = 'hidden';
       setView("details");
       setFormStatus("idle");
+      setSubmitError("");
     } else {
       document.body.style.overflow = 'unset';
       document.body.style.paddingRight = '0px';
@@ -88,14 +91,27 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("submitting");
-    setTimeout(() => {
+    setSubmitError("");
+
+    try {
+      const payload = buildInquiryPayload({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        phone: formData.phone,
+        companyOrWebsite: formData.company,
+        services: [service.title]
+      });
+
+      await sendInquiryEmail(payload);
       setFormStatus("success");
-      // Reset form (optional)
-      // setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-    }, 1500);
+    } catch (error) {
+      setFormStatus("error");
+      setSubmitError(error instanceof Error ? error.message : "Failed to send request. Please try again.");
+    }
   };
 
   if (!mounted || !service) return null;
@@ -287,6 +303,10 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
                                     onChange={(e:any) => setFormData({...formData, message: e.target.value})}
                                     required
                                   />
+
+                                  {formStatus === "error" && (
+                                    <p className="mt-2 text-sm text-red-400">{submitError}</p>
+                                  )}
                                   
                                   <div className="flex justify-end mt-6">
                                       <Button disabled={formStatus === "submitting"} className="w-full md:w-auto">

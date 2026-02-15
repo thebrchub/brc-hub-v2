@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Link } from "react-router-dom"; // <--- Imported Link
+import { buildInquiryPayload, sendInquiryEmail } from "../../utils/sendEmail";
 
 // 1. Reusable "Tech" Input Component
 const TechInput = ({ label, type = "text", ...props }: any) => {
@@ -64,7 +65,10 @@ const services = [
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [submitError, setSubmitError] = useState("");
+  const [submittedName, setSubmittedName] = useState("");
 
   // --- PHONE VALIDATION HANDLER ---
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,15 +81,36 @@ export const Contact = () => {
     setFormData({ ...formData, phone: value });
   };
 
+  const toggleService = (service: string) => {
+    setSelectedServices((prev) =>
+      prev.includes(service) ? prev.filter((item) => item !== service) : [...prev, service]
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("submitting");
+    setSubmitError("");
 
-    // Simulate network request (2 seconds)
-    setTimeout(() => {
+    try {
+      const payload = buildInquiryPayload({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        phone: formData.phone,
+        companyOrWebsite: formData.company,
+        services: selectedServices
+      });
+
+      await sendInquiryEmail(payload);
+      setSubmittedName(formData.name);
       setFormStatus("success");
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-    }, 2000);
+      setSelectedServices([]);
+    } catch (error) {
+      setFormStatus("error");
+      setSubmitError(error instanceof Error ? error.message : "Failed to send message. Please try again.");
+    }
   };
 
   return (
@@ -209,10 +234,13 @@ export const Contact = () => {
                       </motion.div>
                       <h3 className="text-3xl font-display font-bold text-white mb-2">Message Received!</h3>
                       <p className="text-gray-400 max-w-md">
-                         Thanks for reaching out, {formData.name || 'Partner'}. Our team is reviewing your details and will get back to you within 24 hours.
+                         Thanks for reaching out, {submittedName || "Partner"}. Our team is reviewing your details and will get back to you within 24 hours.
                       </p>
                       <Button 
-                        onClick={() => setFormStatus("idle")} 
+                        onClick={() => {
+                          setFormStatus("idle");
+                          setSubmitError("");
+                        }}
                         variant="outline" 
                         className="mt-8 border-white/20"
                       >
@@ -268,7 +296,12 @@ export const Contact = () => {
                               <div className="flex flex-wrap gap-3">
                                   {services.map((service) => (
                                       <label key={service} className="cursor-pointer group">
-                                          <input type="checkbox" className="peer sr-only" />
+                                          <input
+                                            type="checkbox"
+                                            className="peer sr-only"
+                                            checked={selectedServices.includes(service)}
+                                            onChange={() => toggleService(service)}
+                                          />
                                           <span className="inline-block px-5 py-2.5 rounded-full border border-white/10 bg-black/40 text-gray-400 
                                               group-hover:bg-white/10 group-hover:text-white 
                                               peer-checked:bg-brc-orange peer-checked:text-white peer-checked:border-brc-orange peer-checked:shadow-[0_0_15px_rgba(255,87,34,0.4)]
@@ -287,6 +320,10 @@ export const Contact = () => {
                             value={formData.message}
                             onChange={(e: any) => setFormData({...formData, message: e.target.value})}
                           />
+
+                          {formStatus === "error" && (
+                            <p className="mt-4 text-sm text-red-400">{submitError}</p>
+                          )}
                       </div>
 
                       <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
