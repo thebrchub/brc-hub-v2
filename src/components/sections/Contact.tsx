@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "../ui/Button";
+import { Link } from "react-router-dom"; // <--- Imported Link
 
 // 1. Reusable "Tech" Input Component
 const TechInput = ({ label, type = "text", ...props }: any) => {
@@ -290,7 +291,7 @@ export const Contact = () => {
 
                       <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-6">
                           <p className="text-xs text-gray-500 order-2 md:order-1 text-center md:text-left">
-                              By sending this, you agree to our <span className="underline hover:text-white cursor-pointer">Privacy Policy</span>.
+                              By sending this, you agree to our <Link to="/privacy-policy" className="underline hover:text-white cursor-pointer">Privacy Policy</Link>.
                           </p>
                           <Button 
                             disabled={formStatus === "submitting"}
