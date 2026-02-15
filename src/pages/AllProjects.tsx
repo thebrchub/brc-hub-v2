@@ -84,8 +84,8 @@ export const AllProjects = () => {
   return (
     <>
       <SEO 
-        title="Software Development & Marketing Agency"
-        description="BRC Hub is a full-service agency in Ballari providing Web Development, App Development, and Digital Marketing solutions to scale your business."
+        title="BRC Hub | Premium Tech & Growth Agency"
+        description="BRC Hub is a full-service agency in Ballari providing Web & App Development, SaaS Development and Digital Marketing solutions to scale your business."
       />
     <div className="min-h-screen bg-brc-black pt-32 pb-20">
       <div className="container mx-auto px-6">

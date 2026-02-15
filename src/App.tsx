@@ -53,8 +53,8 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="Software Development & Marketing Agency"
-        description="BRC Hub is a full-service agency in Ballari providing Web Development, App Development, and Digital Marketing solutions to scale your business."
+        title="BRC Hub | Premium Tech & Growth Agency"
+        description="BRC Hub is a full-service agency in Toranagallu, Ballari providing Web & App Development, SaaS Development and Digital Marketing solutions to scale your business."
       />
       
       {/* Since these are standard imports, there is NO loading spinner here.
