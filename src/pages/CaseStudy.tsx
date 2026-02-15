@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom'; // <--- Added useLocation
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '../data/projects';
@@ -33,33 +33,47 @@ const MarqueeRow = ({ images, reverse = false }: { images: string[]; reverse?: b
   );
 };
 
+// --- ANIMATION VARIANTS FOR SMOOTH SLIDER ---
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 1000 : -1000,
+    opacity: 0
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1000 : -1000,
+    opacity: 0
+  })
+};
+
 export const CaseStudy = () => {
   const { id } = useParams();
-  const location = useLocation(); // <--- Hook to get the state
+  const location = useLocation();
   const project = projects.find((p) => p.id === id);
   
   // --- CAROUSEL STATE ---
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // We need direction to know which way to slide (+1 for next, -1 for prev)
+  const [direction, setDirection] = useState(0); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setCurrentImageIndex(0); 
+    setDirection(0);
   }, [id]);
 
   if (!project) {
     return <div className="min-h-screen flex items-center justify-center text-white">Project not found</div>;
   }
 
-  // --- SMART BACK BUTTON LOGIC ---
-  // Check if we have a "from" state. 
-  // If "from" is "/work", go back to "/work". 
-  // Otherwise default to "/" (Home).
   const backPath = location.state?.from === "/work" ? "/work" : "/";
   const backText = location.state?.from === "/work" ? "Back to Projects" : "Back to Home";
-  
-  // Only scroll to #work section if going back to Home
   const backState = backPath === "/" ? { scrollTo: "work" } : {};
-
 
   const galleryImages = project.gallery && project.gallery.length > 0 
     ? project.gallery 
@@ -71,26 +85,39 @@ export const CaseStudy = () => {
   const row1Images = galleryImages.slice(0, halfIndex);
   const row2Images = galleryImages.slice(halfIndex).reverse(); 
 
+  // --- UPDATED HANDLERS ---
   const nextImage = () => {
+    setDirection(1);
     setCurrentImageIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
+    setDirection(-1);
     setCurrentImageIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
   };
+
+  // Preload next/prev images to reduce network lag
+  useEffect(() => {
+    if(!isDesignShowcase && galleryImages.length > 1) {
+       const nextIdx = (currentImageIndex + 1) % galleryImages.length;
+       const prevIdx = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+       new Image().src = galleryImages[nextIdx];
+       new Image().src = galleryImages[prevIdx];
+    }
+  }, [currentImageIndex, galleryImages, isDesignShowcase]);
 
   return (
     <>
       <SEO 
-        title={project.title} // e.g. "Powerbird Elevators | BRC Hub"
-        description={project.description} // "Premium animated website for..."
-        image={project.image} // Shows the project thumbnail on WhatsApp/LinkedIn
+        title={project.title} 
+        description={project.description}
+        image={project.image} 
         url={`/case-study/${project.id}`}
       />
     <div className="pt-32 pb-20 min-h-screen overflow-x-hidden">
       <div className="container mx-auto px-6">
         
-        {/* SMART BACK BUTTON */}
+        {/* BACK BUTTON */}
         <Link 
             to={backPath}
             state={backState}
@@ -149,17 +176,17 @@ export const CaseStudy = () => {
               <div>
                   <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-3">Core Tech</h3>
                   <div className="flex flex-wrap gap-2">
-                     {project.stack.slice(0, 4).map((tech, i) => (
-                        <span key={i} className="px-3 py-1 rounded bg-black/40 border border-white/10 text-gray-300 text-xs font-mono">
-                           {tech}
-                        </span>
-                     ))}
+                      {project.stack.slice(0, 4).map((tech, i) => (
+                         <span key={i} className="px-3 py-1 rounded bg-black/40 border border-white/10 text-gray-300 text-xs font-mono">
+                            {tech}
+                         </span>
+                      ))}
                   </div>
               </div>
           </motion.div>
         </div>
 
-        {/* --- 2. DYNAMIC GALLERY SECTION --- */}
+        {/* --- 2. DYNAMIC GALLERY SECTION (UPDATED) --- */}
         {isDesignShowcase ? (
             <div className="mb-24 -mx-6 md:-mx-0">
                <MarqueeRow images={row1Images} reverse={false} />
@@ -172,23 +199,28 @@ export const CaseStudy = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
-              className="relative rounded-2xl overflow-hidden border border-white/10 aspect-video mb-24 group select-none"
+              className="relative rounded-2xl overflow-hidden border border-white/10 aspect-video mb-24 group select-none bg-brc-black"
             >
-              <div className="absolute inset-0 bg-brc-black">
-                  <AnimatePresence mode='wait'>
-                    <motion.img 
-                        key={currentImageIndex}
-                        src={galleryImages[currentImageIndex]} 
-                        alt={`${project.title} screenshot`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-full h-full object-cover"
-                    />
-                  </AnimatePresence>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-              </div>
+              {/* Removed 'wait' mode for simultaneous slide animation */}
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.img 
+                  key={currentImageIndex}
+                  src={galleryImages[currentImageIndex]} 
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 }
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover" // Absolute is CRITICAL for overlapping
+                  alt={`${project.title} screenshot`}
+                />
+              </AnimatePresence>
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-10" />
 
               {galleryImages.length > 1 && (
                 <>
