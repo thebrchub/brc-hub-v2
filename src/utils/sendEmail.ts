@@ -10,6 +10,8 @@ type InquiryFormInput = {
 export type MailPorterPayload = {
   name: string;
   email: string;
+  user_email: string;
+  subject: string;
   message: string;
   mobile: string;
   brand: string;
@@ -21,6 +23,7 @@ export type MailPorterPayload = {
 const EMAIL_API_URL = import.meta.env.VITE_MAIL_PORTER_URL;
 const EMAIL_API_KEY = import.meta.env.VITE_MAIL_PORTER_API_KEY;
 const EMAIL_BRAND = import.meta.env.VITE_MAIL_PORTER_BRAND || "brchub";
+const EMAIL_TO = import.meta.env.VITE_MAIL_PORTER_EMAIL || "";
 
 const WEBSITE_REGEX = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(\/.*)?$/i;
 
@@ -45,7 +48,9 @@ export const buildInquiryPayload = (input: InquiryFormInput): MailPorterPayload 
 
   return {
     name: input.name.trim(),
-    email: input.email.trim(),
+    email: EMAIL_TO,
+    user_email: input.email.trim(),
+    subject: "New Lead",
     message: input.message.trim(),
     mobile: (input.phone || "").trim(),
     brand: EMAIL_BRAND,
@@ -56,8 +61,10 @@ export const buildInquiryPayload = (input: InquiryFormInput): MailPorterPayload 
 };
 
 export const sendInquiryEmail = async (payload: MailPorterPayload) => {
-  if (!EMAIL_API_URL || !EMAIL_API_KEY) {
-    throw new Error("Email API is not configured. Set VITE_MAIL_PORTER_URL and VITE_MAIL_PORTER_API_KEY.");
+  if (!EMAIL_API_URL || !EMAIL_API_KEY || !EMAIL_TO) {
+    throw new Error(
+      "Email API is not configured. Set VITE_MAIL_PORTER_URL, VITE_MAIL_PORTER_API_KEY, and VITE_MAIL_PORTER_EMAIL."
+    );
   }
 
   const response = await fetch(EMAIL_API_URL, {
