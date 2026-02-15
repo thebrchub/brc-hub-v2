@@ -193,16 +193,17 @@ export const Navbar = () => {
       <AnimatePresence>
         {open && (
           <>
+            {/* UPDATED: Added touch-none to prevent background interaction */}
             <motion.div
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60]"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] touch-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
             />
             <motion.aside
-              // Updated styling for better look
-              className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-[#0A0A0A] border-l border-white/10 z-[70] shadow-2xl flex flex-col"
+              // UPDATED: Changed h-full to h-[100dvh] to fix the mobile lifting issue
+              className="fixed top-0 right-0 h-[100dvh] w-[85%] max-w-sm bg-[#0A0A0A] border-l border-white/10 z-[70] shadow-2xl flex flex-col"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -215,7 +216,8 @@ export const Navbar = () => {
               </div>
 
               {/* Mobile Links */}
-              <nav className="flex flex-col px-6 py-8 gap-2 flex-grow overflow-y-auto">
+              {/* UPDATED: Added overscroll-contain to stop scroll chaining */}
+              <nav className="flex flex-col px-6 py-8 gap-2 flex-grow overflow-y-auto overscroll-contain">
                 {navLinks.map((item, i) => (
                     isHomePage ? (
                         <ScrollLink 
