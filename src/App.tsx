@@ -1,22 +1,35 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react'; 
 import { scroller } from 'react-scroll';
 
+// --- 1. CRITICAL COMPONENTS (Standard Imports) ---
+// We import these normally so the Homepage scrolls instantly without "pop-ins"
 import { Hero } from './components/sections/Hero';
 import { Navbar } from './components/layout/Navbar';
-import { Services } from './components/sections/Services';
-import { Work } from './components/sections/Work';
-import { Contact } from './components/sections/Contact';
 import { Footer } from './components/layout/Footer';
 import { Cursor } from './components/ui/Cursor';
+import { SEO } from './components/SEO';
 import { About } from './components/sections/About';
+import { Services } from './components/sections/Services';
+import { Work } from './components/sections/Work';
 import { Testimonials } from './components/sections/Testimonials';
-import { CaseStudy } from './pages/CaseStudy';
-import { AllProjects } from './pages/AllProjects'; 
-import { NotFound } from './pages/NotFound'; 
-import { SEO } from './components/SEO'; // <--- 1. Import SEO
-import { PrivacyPolicy } from './pages/PrivacyPolicy'; // <--- Import
-import { TermsOfService } from './pages/TermsOfService'; // <--- Import
+import { Contact } from './components/sections/Contact';
+
+// --- 2. HEAVY SEPARATE PAGES (Lazy Load) ---
+// These are only downloaded when the user CLICKS on them.
+// This saves huge amounts of data on the initial load.
+const CaseStudy = lazy(() => import('./pages/CaseStudy').then(module => ({ default: module.CaseStudy })));
+const AllProjects = lazy(() => import('./pages/AllProjects').then(module => ({ default: module.AllProjects })));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicy })));
+const TermsOfService = lazy(() => import('./pages/TermsOfService').then(module => ({ default: module.TermsOfService })));
+const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
+
+// Loading Spinner (Only shows when switching to a NEW page, like Case Study)
+const PageLoader = () => (
+  <div className="min-h-screen bg-brc-black flex items-center justify-center">
+    <div className="w-10 h-10 border-4 border-brc-orange border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 // Helper component for the One-Page layout
 const Home = () => {
@@ -39,12 +52,14 @@ const Home = () => {
 
   return (
     <>
-      {/* 2. Add SEO Component Here for the Home Page */}
       <SEO 
-        title="BRC Hub | Premium Tech & Growth Agency"
-        description="BRC Hub is a full-service agency in Ballari providing Web & App Development, SaaS Development and Digital Marketing solutions to scale your business."
+        title="Software Development & Marketing Agency"
+        description="BRC Hub is a full-service agency in Ballari providing Web Development, App Development, and Digital Marketing solutions to scale your business."
       />
       
+      {/* Since these are standard imports, there is NO loading spinner here.
+         The user can scroll from top to bottom instantly.
+      */}
       <Hero />
       <About />
       <Services />
@@ -63,18 +78,22 @@ function App() {
         <Navbar />
         
         <main>
-          <Routes>
-            {/* Standard Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/case-study/:id" element={<CaseStudy />} />
-            <Route path="/work" element={<AllProjects />} />
-
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            
-            {/* Catch-all Route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          {/* Wrap Routes in Suspense for transition loading between PAGES only */}
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Standard Routes */}
+              <Route path="/" element={<Home />} />
+              
+              {/* These will trigger the PageLoader briefly on first click */}
+              <Route path="/case-study/:id" element={<CaseStudy />} />
+              <Route path="/work" element={<AllProjects />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              
+              {/* Catch-all Route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </main>
         
         <Footer />
