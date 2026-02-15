@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-// 1. Re-import useNavigate and add useLocation
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +10,6 @@ export const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
-  // 2. Initialize Hooks
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -24,6 +22,7 @@ export const Navbar = () => {
     { name: 'Contact', to: 'contact' },
   ];
 
+  // 1. Scroll Control Logic
   useEffect(() => {
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
@@ -40,7 +39,18 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY, open]);
 
-  // 3. Smart Navigation Handler (for non-home pages)
+  // 2. LOCK BODY SCROLL WHEN MOBILE MENU IS OPEN
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
+
   const handleNavClick = (targetId: string) => {
     setOpen(false);
     if (!isHomePage) {
@@ -52,7 +62,7 @@ export const Navbar = () => {
     if (isHomePage) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        navigate("/", { state: { scrollTo: "hero" } }); // Go home and scroll top
+        navigate("/", { state: { scrollTo: "hero" } });
     }
   };
 
@@ -73,14 +83,14 @@ export const Navbar = () => {
             onClick={handleLogoClick}
           >
             <div>
-                <img src="/logo.svg" alt="BRC Hub" className="h-12 w-auto object-contain" />
+                <img src="/logo.svg" alt="BRC Hub" className="h-10 w-auto object-contain sm:h-12" />
             </div>
             
             <motion.span 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }} 
-                className="font-display text-3xl font-bold tracking-tight text-white hidden sm:block"
+                className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white block"
             >
                 BRC <span className="text-brc-orange">Hub</span>
             </motion.span>
@@ -97,11 +107,9 @@ export const Navbar = () => {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {navLinks.map((item, index) => {
-                // Shared classes for both Link types
                 const linkClasses = "relative px-5 py-2 text-sm text-gray-400 font-medium hover:text-white cursor-pointer transition-colors duration-200 z-10 block";
                 
                 return isHomePage ? (
-                    // OPTION A: Scroll Link (If on Home)
                     <ScrollLink
                         key={item.name}
                         to={item.to}
@@ -119,14 +127,13 @@ export const Navbar = () => {
                             layoutId="hover-pill"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={{ opacity: 0, scale: 0 }}
                             transition={{ duration: 0.2 }}
                             className="absolute inset-0 rounded-full -z-10 bg-white/10"
                             />
                         )}
                     </ScrollLink>
                 ) : (
-                    // OPTION B: Router Action (If on Case Study)
                     <div
                         key={item.name}
                         onClick={() => handleNavClick(item.to)}
@@ -139,7 +146,7 @@ export const Navbar = () => {
                             layoutId="hover-pill"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={{ opacity: 0, scale: 0 }}
                             transition={{ duration: 0.2 }}
                             className="absolute inset-0 rounded-full -z-10 bg-white/10"
                             />
@@ -152,7 +159,6 @@ export const Navbar = () => {
           {/* CTA & MOBILE MENU BUTTON */}
           <div className="flex items-center gap-4 flex-shrink-0 z-50">
             <div className="hidden md:block">
-                {/* Conditional Start Project Button */}
                 {isHomePage ? (
                     <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
                         <button className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20">
@@ -195,19 +201,22 @@ export const Navbar = () => {
               onClick={() => setOpen(false)}
             />
             <motion.aside
-              className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-brc-black border-l border-white/10 z-[70] shadow-2xl flex flex-col"
+              // Updated styling for better look
+              className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-[#0A0A0A] border-l border-white/10 z-[70] shadow-2xl flex flex-col"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
-              <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
+              {/* Mobile Header */}
+              <div className="flex items-center justify-between px-6 py-6 border-b border-white/5 bg-white/[0.02]">
                 <span className="text-sm font-bold tracking-widest uppercase text-gray-500">Menu</span>
                 <button onClick={() => setOpen(false)} className="p-2 rounded-full hover:bg-white/10 text-white transition"><X size={24} /></button>
               </div>
-              <nav className="flex flex-col px-6 py-8 gap-2">
+
+              {/* Mobile Links */}
+              <nav className="flex flex-col px-6 py-8 gap-2 flex-grow overflow-y-auto">
                 {navLinks.map((item, i) => (
-                    // MOBILE LOGIC: Toggle between ScrollLink and onClick
                     isHomePage ? (
                         <ScrollLink 
                             key={item.name} 
@@ -221,10 +230,10 @@ export const Navbar = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="group flex items-center justify-between p-4 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                            className="group flex items-center justify-between p-4 rounded-xl text-gray-300 hover:bg-white/5 hover:text-white cursor-pointer border border-transparent hover:border-white/5 transition-all"
                             >
                             <span className="text-lg font-medium">{item.name}</span>
-                            <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ChevronRight size={16} className="text-gray-600 group-hover:text-brc-orange transition-colors" />
                             </motion.div>
                         </ScrollLink>
                     ) : (
@@ -236,15 +245,38 @@ export const Navbar = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="group flex items-center justify-between p-4 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                            className="group flex items-center justify-between p-4 rounded-xl text-gray-300 hover:bg-white/5 hover:text-white cursor-pointer border border-transparent hover:border-white/5 transition-all"
                             >
                             <span className="text-lg font-medium">{item.name}</span>
-                            <ChevronRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ChevronRight size={16} className="text-gray-600 group-hover:text-brc-orange transition-colors" />
                             </motion.div>
                         </div>
                     )
                 ))}
               </nav>
+
+              {/* Mobile Footer / CTA */}
+              <div className="p-6 border-t border-white/10 bg-white/[0.02]">
+                  {isHomePage ? (
+                     <ScrollLink to="contact" smooth={true} duration={800} offset={-50} onClick={() => setOpen(false)}>
+                        <button className="w-full group relative px-6 py-4 rounded-xl text-base font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white">
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                Start Project <ChevronRight size={18} />
+                            </span>
+                        </button>
+                     </ScrollLink>
+                  ) : (
+                     <button 
+                        onClick={() => handleNavClick("contact")}
+                        className="w-full group relative px-6 py-4 rounded-xl text-base font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white"
+                     >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                            Start Project <ChevronRight size={18} />
+                        </span>
+                     </button>
+                  )}
+              </div>
+
             </motion.aside>
           </>
         )}

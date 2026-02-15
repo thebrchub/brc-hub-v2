@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { X, CheckCircle2, ArrowUpRight, ArrowLeft, Send, Loader2, Check } from "lucide-react";
@@ -51,25 +51,54 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
   
   // Updated State to include phone and company
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
+  
+  // Store scroll position to restore it later
+  const scrollPosition = useRef(0);
 
   useEffect(() => {
     setMounted(true);
+    
     if (isOpen) {
+      // 1. Save current scroll position
+      scrollPosition.current = window.scrollY;
+      
+      // 2. Lock Body (Standard)
       if (window.innerWidth > 768) {
           const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
           document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
+      
+      // 3. LOCK BODY (Mobile Strict)
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed'; // Forces iOS to lock
+      document.body.style.top = `-${scrollPosition.current}px`; // Keep visual position
+      document.body.style.width = '100%';
+
       setView("details");
       setFormStatus("idle");
       setSubmitError("");
     } else {
-      document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
+      // 4. Unlock Body
+      const top = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.paddingRight = '';
+      
+      // 5. Restore scroll position instantly
+      if (top) {
+        window.scrollTo(0, parseInt(top || '0') * -1);
+      }
     }
+    
     return () => {
-        document.body.style.overflow = 'unset';
-        document.body.style.paddingRight = '0px';
+        // Cleanup on unmount
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.paddingRight = '';
     }
   }, [isOpen]);
 
@@ -127,7 +156,7 @@ export const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) =>
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998]"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9998] touch-none" // Added touch-none
           />
 
           <div className="fixed inset-0 z-[9999] flex items-center justify-center p-0 pointer-events-none">
