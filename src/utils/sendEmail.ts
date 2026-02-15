@@ -13,7 +13,7 @@ export type MailPorterPayload = {
   user_email: string;
   subject: string;
   message: string;
-  mobile: string;
+  mobile?: string;
   brand: string;
   services: string[];
   company: string;
@@ -45,6 +45,7 @@ const normalizeCompanyWebsite = (value?: string) => {
 
 export const buildInquiryPayload = (input: InquiryFormInput): MailPorterPayload => {
   const companyWebsite = normalizeCompanyWebsite(input.companyOrWebsite);
+  const mobile = (input.phone || "").trim();
 
   return {
     name: input.name.trim(),
@@ -52,7 +53,7 @@ export const buildInquiryPayload = (input: InquiryFormInput): MailPorterPayload 
     user_email: input.email.trim(),
     subject: "New Lead",
     message: input.message.trim(),
-    mobile: (input.phone || "").trim(),
+    ...(mobile ? { mobile } : {}),
     brand: EMAIL_BRAND,
     services: input.services?.length ? input.services : [],
     company: companyWebsite.company,
