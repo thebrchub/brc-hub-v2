@@ -72,11 +72,11 @@ export const projects: Project[] = [
 
   // --- WEB (Has Live Link) ---
   {
-    id: "legalvala-web",
+    id: "byxbyte-web",
     title: "Byxbyte Media",
     category: "Web",
     timeline: "3 Weeks", 
-    client: "LVC Legalvala Consultancy LLP",
+    client: "Byxbyte Media",
     description: "High-performance corporate site along with appointment system.",
     fullDescription: "A complete rebrand and digital presence for a top legal firm.",
     challenge: "Old site was slow and non-responsive.",

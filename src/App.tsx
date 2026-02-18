@@ -23,6 +23,7 @@ const AllProjects = lazy(() => import('./pages/AllProjects').then(module => ({ d
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('./pages/TermsOfService').then(module => ({ default: module.TermsOfService })));
 const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then(module => ({ default: module.ContactPage })));
 
 // Loading Spinner (Only shows when switching to a NEW page, like Case Study)
 const PageLoader = () => (
@@ -83,6 +84,7 @@ function App() {
             <Routes>
               {/* Standard Routes */}
               <Route path="/" element={<Home />} />
+              <Route path="/contact-us" element={<ContactPage />} />
               
               {/* These will trigger the PageLoader briefly on first click */}
               <Route path="/case-study/:id" element={<CaseStudy />} />

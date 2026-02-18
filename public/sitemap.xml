@@ -4,6 +4,11 @@
       <priority>1.0</priority>
    </url>
    <url>
+    <loc>https://thebrchub.tech/contact-us</loc>
+    <lastmod>2026-02-18</lastmod>
+    <priority>0.80</priority>
+  </url>
+   <url>
       <loc>https://thebrchub.tech/work</loc>
       <priority>0.8</priority>
    </url>
@@ -16,7 +21,7 @@
       <priority>0.7</priority>
    </url>
    <url>
-      <loc>https://thebrchub.tech/case-study/legalvala-web</loc>
+      <loc>https://thebrchub.tech/case-study/byxbyte-web</loc>
       <priority>0.7</priority>
    </url>
 </urlset>
