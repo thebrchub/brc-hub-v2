@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 export const SEO = ({ title, description, image, url }: SEOProps) => {
-  const siteName = "BRC Hub";
+  const siteName = "BRC Hub LLP";
   const defaultImage = "/og-image.jpg"; // You need to add a generic banner in your public folder
   const siteUrl = "https://thebrchub.tech"; // Your actual domain
   

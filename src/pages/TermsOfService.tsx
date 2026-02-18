@@ -13,7 +13,7 @@ export const TermsOfService = () => {
     <>
       <SEO 
         title="Terms of Service" 
-        description="Terms and conditions for using BRC Hub services."
+        description="Terms and conditions for using BRC Hub LLP services."
       />
       
       {/* Animation Wrapper */}
@@ -39,7 +39,7 @@ export const TermsOfService = () => {
             <section>
               <h2 className="text-2xl font-bold text-white mb-4">1. Agreement to Terms</h2>
               <p>
-                These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and BRC Hub ("we," "us" or "our"), concerning your access to and use of the thebrchub.tech website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the "Site").
+                These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and BRC Hub LLP ("we," "us" or "our"), concerning your access to and use of the thebrchub.tech website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the "Site").
               </p>
             </section>
 
