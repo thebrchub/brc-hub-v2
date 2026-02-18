@@ -5,7 +5,6 @@ import { Button } from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { buildInquiryPayload, sendInquiryEmail } from "../utils/sendEmail";
 import { Navbar } from "../components/layout/Navbar";
-import { Footer } from "../components/layout/Footer";
 import { SEO } from "../components/SEO";
 
 // --- 1. Reusable "Tech" Input Component (Same as Contact.tsx) ---
