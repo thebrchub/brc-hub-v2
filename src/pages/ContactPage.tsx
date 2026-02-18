@@ -394,8 +394,6 @@ export const ContactPage = () => {
                 </div>
             </div>
         </div>
-
-        <Footer />
       </div>
     </>
   );

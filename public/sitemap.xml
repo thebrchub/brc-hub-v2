@@ -1,27 +1,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
-      <loc>https://thebrchub.tech/</loc>
+      <loc>https://www.thebrchub.tech/</loc>
       <priority>1.0</priority>
    </url>
+   
    <url>
-    <loc>https://thebrchub.tech/contact-us</loc>
+    <loc>https://www.thebrchub.tech/contact-us</loc>
     <lastmod>2026-02-18</lastmod>
     <priority>0.80</priority>
   </url>
    <url>
-      <loc>https://thebrchub.tech/work</loc>
+      <loc>https://www.thebrchub.tech/work</loc>
       <priority>0.8</priority>
    </url>
+   
    <url>
-      <loc>https://thebrchub.tech/case-study/itat-analyser</loc>
+      <loc>https://www.thebrchub.tech/privacy-policy</loc>
+      <priority>0.6</priority>
+   </url>
+   <url>
+      <loc>https://www.thebrchub.tech/terms-of-service</loc>
+      <priority>0.6</priority>
+   </url>
+
+   <url>
+      <loc>https://www.thebrchub.tech/case-study/itat-analyser</loc>
       <priority>0.7</priority>
    </url>
    <url>
-      <loc>https://thebrchub.tech/case-study/powerbird</loc>
+      <loc>https://www.thebrchub.tech/case-study/powerbird</loc>
       <priority>0.7</priority>
    </url>
    <url>
-      <loc>https://thebrchub.tech/case-study/byxbyte-web</loc>
+      <loc>https://www.thebrchub.tech/case-study/byxbyte-web</loc>
       <priority>0.7</priority>
    </url>
 </urlset>
