@@ -174,7 +174,7 @@ export const About = () => {
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ delay: 0.2 }}
-    className="font-display text-lg md:text-3xl text-gray-400 mt-8 tracking-wide"
+    className="font-display text-xl md:text-3xl text-gray-400 mt-8 tracking-wide"
 >
     Partnering with clients across{" "}
     <span className="text-gray-200">India, USA, UAE & Australia</span>
