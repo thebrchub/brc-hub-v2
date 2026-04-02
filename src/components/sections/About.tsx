@@ -129,6 +129,7 @@ export const About = () => {
                         </div>
                     ))}
                 </div>
+                
             </div>
 
             {/* Right: The Values Grid (Tech + Marketing Mindset) */}
@@ -161,13 +162,24 @@ export const About = () => {
             </div>
 
         </div>
+{/* Bottom Tagline */}
+<div className="text-center pt-12 border-t border-white/5">
+    <p className="font-display text-2xl md:text-3xl text-gray-500">
+        "We don't just build Technology. We build <span className="text-white">Growth</span>."
+    </p>
 
-        {/* Bottom Tagline */}
-        <div className="text-center pt-12 border-t border-white/5">
-            <p className="font-display text-2xl md:text-3xl text-gray-500">
-                "We don't just build Technology. We build <span className="text-white">Growth</span>."
-            </p>
-        </div>
+    {/* 🌍 Global Presence */}
+    <motion.p
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.2 }}
+    className="font-display text-lg md:text-3xl text-gray-400 mt-8 tracking-wide"
+>
+    Partnering with clients across{" "}
+    <span className="text-gray-200">India, USA, UAE & Australia</span>
+</motion.p>
+</div>
 
       </div>
     </section>

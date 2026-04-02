@@ -153,7 +153,7 @@ export const Footer = () => {
               <li className="flex items-start gap-3 text-gray-400">
                 <MapPin size={20} className="mt-1 flex-shrink-0 text-brc-orange" />
                 <span className="hover:text-white transition-colors cursor-pointer">
-                    Toranagallu, Ballari, Karnataka,<br/>India 583123
+                     India | USA | UAE | Australia<br/>
                 </span>
               </li>
               <li className="flex items-center gap-3 text-gray-400">
