@@ -186,8 +186,8 @@ export const Contact = () => {
                       <MapPin size={20} />
                     </div>
                     <div>
-                        <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Visit Us</p>
-                        <span className="font-medium">Toranagallu, Ballari, Karnataka, India</span>
+                        <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Global Presence</p>
+                        <span className="font-medium">India | USA | UAE | Australia</span>
                     </div>
                   </div>
                 </div>
