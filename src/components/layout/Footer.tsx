@@ -158,7 +158,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3 text-gray-400">
                 <Mail size={20} className="text-brc-orange" />
-                <span className="hover:text-white transition-colors cursor-pointer">info@thebrchub.tech</span>
+                <span className="hover:text-white transition-colors cursor-pointer">info@brchub.tech</span>
               </li>
             </ul>
           </div>

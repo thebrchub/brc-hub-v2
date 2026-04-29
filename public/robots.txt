@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thebrchub.tech/sitemap.xml
+Sitemap: https://brchub.tech/sitemap.xml
