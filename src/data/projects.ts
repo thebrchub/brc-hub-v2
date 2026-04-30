@@ -67,7 +67,7 @@ export const projects: Project[] = [
         "/portfolio/powerbird/4.webp",
         "/portfolio/powerbird/5.webp"
     ],
-    liveUrl: "https://powerbird-elevators.brchub.me/" 
+    liveUrl: "https://powerbird-elevators.brchub.info/" 
   },
 
   // --- WEB (Has Live Link) ---
@@ -92,7 +92,7 @@ export const projects: Project[] = [
         "/portfolio/byxbyte/5.webp",
         "/portfolio/byxbyte/6.webp",
     ],
-    liveUrl: "https://byxbytemedia.brchub.me/" 
+    liveUrl: "https://byxbytemedia.brchub.info/" 
   },
 
   // --- APPS ---
@@ -164,7 +164,7 @@ export const projects: Project[] = [
     results: ["Launched on Schedule", "Mobile Responsive"],
     stack: ["React", "JavaScript", "Tailwind"],
     image: "/portfolio/nonfeature/quantacel.webp",
-    liveUrl: "https://orvexa.brchub.me/"
+    liveUrl: "https://orvexa.brchub.info/"
   },
 
   {
@@ -196,7 +196,7 @@ export const projects: Project[] = [
     results: ["Added to Portfolio"],
     stack: ["HTML", "CSS"],
     image: "/portfolio/nonfeature/if.webp",
-    liveUrl: "https://industrialforge.brchub.me/"
+    liveUrl: "https://industrialforge.brchub.info/"
   },
 
   {
