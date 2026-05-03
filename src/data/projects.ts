@@ -70,6 +70,39 @@ export const projects: Project[] = [
     liveUrl: "https://powerbird-elevators.brchub.info/" 
   },
 
+  {
+  id: "jaipurhotel",
+  title: "The Ivory Ember",
+  category: "Web",
+  client: "The Ivory Ember",
+  timeline: "1 Week",
+  description: "Luxury hospitality website for a heritage hotel, fine-dining restaurant, and premium event destination.",
+  fullDescription: "A premium digital experience crafted for The Ivory Ember, blending royal heritage aesthetics with modern luxury to showcase boutique stays, rooftop dining, weddings, and exclusive guest experiences.",
+  challenge: "Designing a visually immersive hospitality platform that captures regal elegance while driving direct bookings, dining reservations, and high-value event inquiries.",
+  solution: "Developed a sophisticated, conversion-focused frontend with editorial-style layouts, premium visuals, elegant booking flows, and responsive design tailored for luxury hospitality branding.",
+  results: [
+    "Enhanced Premium Brand Positioning",
+    "Improved Direct Booking Potential",
+    "Stronger Wedding & Event Lead Generation",
+    "Luxury Customer Trust Building"
+  ],
+  stack: ["React", "TypeScript", "Tailwind"],
+  image: "/portfolio/nonfeature/hotel.png",
+  gallery: [
+        "/portfolio/hotel/1.png", 
+        "/portfolio/hotel/2.png", 
+        "/portfolio/hotel/3.png",  
+        "/portfolio/hotel/4.png",
+        "/portfolio/hotel/5.png",
+        "/portfolio/hotel/6.png",
+        "/portfolio/hotel/7.png",
+        "/portfolio/hotel/8.png",
+        "/portfolio/hotel/9.png",
+    ],
+  liveUrl: "https://jaipur-hotel.brchub.tech/",
+},
+
+
   // --- WEB (Has Live Link) ---
   {
     id: "byxbyte-web",
@@ -134,6 +167,8 @@ export const projects: Project[] = [
   },
 
   // --- NON-FEATURED WEB PROJECTS ---
+
+  
 
   {
     id: "legalvala",
