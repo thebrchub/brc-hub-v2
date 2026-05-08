@@ -67,7 +67,7 @@ export const projects: Project[] = [
         "/portfolio/powerbird/4.webp",
         "/portfolio/powerbird/5.webp"
     ],
-    liveUrl: "https://powerbird-elevators.brchub.info/" 
+    liveUrl: "https://www.powerbirdelevators.in/" 
   },
 
   {
