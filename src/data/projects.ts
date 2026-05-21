@@ -170,21 +170,21 @@ export const projects: Project[] = [
 
   
 
-  {
-    id: "legalvala",
-    title: "LVC LegalVala",
-    category: "Web",
-    client: "LVC LegalVala Consultancy LLP",
-    timeline: "3 Weeks",
-    description: "Corporate site for an Agra-based legal consultancy.",
-    fullDescription: "A professional digital presence for a leading legal firm in Agra, streamlining client inquiries and service showcasing.",
-    challenge: "Client needed a fast, SEO-friendly site to capture local search traffic.",
-    solution: "Custom website built with vanilla JavaScript for maximum performance.",
-    results: ["Increased Local Inquiries", "Fast Page Load Speeds"],
-    stack: ["JavaScript", "HTML", "CSS"],
-    image: "/portfolio/nonfeature/legalvala.webp",
-    liveUrl: "https://legalvala.com"
-  },
+  // {
+  //   id: "legalvala",
+  //   title: "LVC LegalVala",
+  //   category: "Web",
+  //   client: "LVC LegalVala Consultancy LLP",
+  //   timeline: "3 Weeks",
+  //   description: "Corporate site for an Agra-based legal consultancy.",
+  //   fullDescription: "A professional digital presence for a leading legal firm in Agra, streamlining client inquiries and service showcasing.",
+  //   challenge: "Client needed a fast, SEO-friendly site to capture local search traffic.",
+  //   solution: "Custom website built with vanilla JavaScript for maximum performance.",
+  //   results: ["Increased Local Inquiries", "Fast Page Load Speeds"],
+  //   stack: ["JavaScript", "HTML", "CSS"],
+  //   image: "/portfolio/nonfeature/legalvala.webp",
+  //   liveUrl: "https://legalvala.com"
+  // },
 
   {
     id: "quantacel",
