@@ -85,6 +85,21 @@ export const projects: Project[] = [
     image: "/portfolio/forgefit.webp",
     liveUrl: "https://forgefit.brchub.tech/"
   },
+  {
+  id: "westbridge",
+  title: "Westbridge International School",
+  category: "Web",
+  client: "Westbridge International School",
+  timeline: "3 Weeks",
+  description: "A premium, globally-minded web presence for an elite international academy in London.",
+  fullDescription: "Westbridge International School required a digital presence that matched their global prestige and academic excellence. We engineered a high-end, cinematic platform focused on prospective parent engagement, featuring elegant bento-grid layouts, ambient hover effects, and a seamless, high-conversion enrollment flow.",
+  challenge: "Transforming a standard educational site into a world-class, globally appealing digital experience while maintaining lightning-fast performance, perfect mobile responsiveness, and clean typography.",
+  solution: "Developed a highly optimized single-page application utilizing React and Vite. Implemented custom Tailwind CSS for a sophisticated, minimalist aesthetic, incorporating soft corner blooms, premium faculty imagery, and fluid hover states to elevate the user experience.",
+  results: ["Premium Global Brand Positioning", "Streamlined Admissions Flow", "Sub-second Load Times"],
+  stack: ["React", "Vite", "Tailwind CSS", "Lucide React"],
+  image: "/portfolio/westbridge.webp",
+  liveUrl: "https://westbridge.brchub.tech/"
+},
 
   {
   id: "jaipurhotel",
