@@ -70,6 +70,22 @@ export const projects: Project[] = [
     liveUrl: "https://www.powerbirdelevators.in/" 
   },
 
+{
+    id: "forgefit",
+    title: "ForgeFit Performance Club",
+    category: "Web",
+    client: "Internal Premium Build",
+    timeline: "4 Weeks",
+    description: "A premium, brutalist web ecosystem for an elite strength and conditioning facility.",
+    fullDescription: "ForgeFit required a digital presence that matched their uncompromising, data-driven approach to physical performance. We engineered a high-end, cinematic platform focused on high-ticket lead generation, featuring interactive diagnostic tools and buttery-smooth scroll physics.",
+    challenge: "Translating a raw, intense physical training philosophy into a premium, high-conversion digital experience without relying on generic fitness templates.",
+    solution: "Developed a lightning-fast client-side SPA utilizing React and Vite. Integrated Framer Motion for cinematic DOM expansions, dynamic overlapping layouts, and interactive UI states to drive 'Free Pass' conversions.",
+    results: ["Sub-second Load Times", "High-Ticket Lead Generation", "Seamless Mobile Optimization"],
+    stack: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
+    image: "/portfolio/forgefit.webp",
+    liveUrl: "https://forgefit.brchub.tech/"
+  },
+
   {
   id: "jaipurhotel",
   title: "The Ivory Ember",
@@ -186,6 +202,8 @@ export const projects: Project[] = [
   //   liveUrl: "https://legalvala.com"
   // },
 
+
+
   {
     id: "quantacel",
     title: "Quantacel",
@@ -217,6 +235,8 @@ export const projects: Project[] = [
     image: "/portfolio/nonfeature/digivala.webp",
     liveUrl: "https://digivala.in/"
   },
+
+
 
   {
     id: "if",
