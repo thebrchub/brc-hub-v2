@@ -85,6 +85,26 @@ export const projects: Project[] = [
     image: "/portfolio/forgefit.webp",
     liveUrl: "https://forgefit.brchub.tech/"
   },
+
+ {
+  id: "lumina-dental",
+  title: "Lumina Dental",
+  category: "Web",
+  client: "Lumina Dental",
+  timeline: "4 Weeks",
+  description: "A luxury digital destination for a high-end, patient-first cosmetic dentistry clinic.",
+  fullDescription: "Lumina Dental required a digital presence that transcended the standard clinical look. We engineered a cinematic, high-conversion platform that feels more like a luxury hospitality site than a medical portal, focusing on patient comfort, trust, and premium aesthetics.",
+  challenge: "Overcoming the 'medical anxiety' barrier by creating an inviting, serene user experience, while effectively showcasing complex clinical services and building immediate patient trust through high-end imagery and testimonials.",
+  solution: "Built a fully dynamic SPA with React and Framer Motion, utilizing a sophisticated, minimalist design language. We implemented advanced scroll-spy navigation, cinematic transition animations for treatments, and a secure, patient-centric booking flow designed for high engagement and privacy.",
+  results: [
+    "Elevated Brand Authority", 
+    "High-Conversion Booking Workflow", 
+    "Cinematic User Journey"
+  ],
+  stack: ["React", "Framer Motion", "Tailwind CSS", "React Router"],
+  image: "/portfolio/dental.webp",
+  liveUrl: "https://dental.brchub.tech/" // Replace with your live URL when ready
+},
   {
   id: "westbridge",
   title: "Westbridge International School",
