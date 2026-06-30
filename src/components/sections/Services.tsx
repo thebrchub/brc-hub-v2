@@ -1,94 +1,101 @@
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Code2, Smartphone, BarChart3, Globe, ArrowUpRight, Search, Megaphone } from "lucide-react";
+import { 
+  Code2, 
+  Smartphone, 
+  AppWindow, 
+  Cloud, 
+  Cpu, 
+  Database, 
+  ArrowUpRight 
+} from "lucide-react";
 import { ServiceModal } from "../ui/ServiceModal";
-// 1. IMPORT THE NEW HYBRID COMPONENT
 import { SpotlightTiltCard } from "../ui/SpotlightTiltCard"; 
 
 const services = [
   {
     category: "Engineering",
-    title: "Web & Platforms",
-    description: "High-performance websites and complex SaaS platforms built for scale.",
-    longDescription: "We build digital foundations that last. Whether it's a high-conversion marketing site or a complex enterprise dashboard, we use modern frameworks to ensure speed, security, and scalability.",
+    title: "Custom Software",
+    description: "Build software tailored to unique business workflows.",
+    longDescription: "We engineer proprietary systems for businesses that have outgrown generic software. Our custom builds ensure a precise fit for your operational logic, prioritizing security and long-term maintainability.",
     icon: <Code2 className="w-8 h-8" />,
     features: [
-        "Custom React / Next.js Development",
-        "Enterprise CMS Solutions",
-        "Progressive Web Apps (PWA)",
-        "API Architecture & Integration"
+        "Architecture Design",
+        "Legacy System Migration",
+        "Workflow Automation",
+        "High-Security Standards"
     ],
-    tools: ["React", "Next.js", "Node.js", "PostgreSQL", "Tailwind"]
+    tools: ["Python", "Node.js", "Go", "Java", "Docker"]
+  },
+  {
+    category: "Engineering",
+    title: "Web Applications",
+    description: "Fast, secure and scalable business web applications.",
+    longDescription: "Full-stack engineering for client portals, data dashboards, and internal web tools. We focus on clean architecture, fast load times, and reliable backend infrastructure.",
+    icon: <AppWindow className="w-8 h-8" />,
+    features: [
+        "Client Portals",
+        "Data Dashboards",
+        "Internal Web Tools",
+        "API Architecture"
+    ],
+    tools: ["React", "Next.js", "TypeScript", "PostgreSQL", "AWS"]
   },
   {
     category: "Engineering",
     title: "Mobile App Dev",
-    description: "Native and Cross-platform apps that offer seamless user experiences.",
-    longDescription: "Mobile is not an afterthought; it's a primary channel. We build silky smooth mobile applications that feel native on every device, powered by robust backends.",
+    description: "Native and cross-platform applications.",
+    longDescription: "Reliable mobile software for iOS and Android. We build robust applications for field operations, internal business workflows, and complex consumer products.",
     icon: <Smartphone className="w-8 h-8" />,
     features: [
-        "iOS & Android Development",
-        "Cross-Platform (React Native/Flutter)",
-        "App Store Optimization (ASO)",
-        "Real-time Features & Chat"
+        "Native iOS & Android",
+        "Cross-Platform Frameworks",
+        "Offline Capabilities",
+        "Secure Data Sync"
     ],
-    tools: ["React Native", "Flutter", "Swift", "Kotlin", "Firebase"]
+    tools: ["React Native", "Flutter", "Swift", "Kotlin", "SQLite"]
   },
   {
-    category: "Growth",
-    title: "Performance & Leads",
-    description: "ROI-focused campaigns. We turn ad spend into measurable revenue.",
-    longDescription: "Stop burning cash on vanity metrics. Our performance marketing strategies are mathematically designed to lower your CAC and increase your ROAS. We hunt for leads that actually convert.",
-    icon: <BarChart3 className="w-8 h-8" />,
+    category: "Product",
+    title: "SaaS Development",
+    description: "Cloud-based software products built for scale.",
+    longDescription: "End-to-end architecture and development for Software-as-a-Service platforms. We handle complex requirements like multitenancy, cloud infrastructure, API integrations, and subscription billing logic.",
+    icon: <Cloud className="w-8 h-8" />,
     features: [
-        "Meta Ads (Facebook/Instagram)",
-        "Google Search & Display Ads",
-        "B2B Lead Generation Funnels",
-        "Conversion Rate Optimization (CRO)"
+        "Multi-tenant Architecture",
+        "Cloud Infrastructure",
+        "Subscription Billing Logic",
+        "Third-party Integrations"
     ],
-    tools: ["Google Ads", "Meta Business", "LinkedIn Ads", "GA4", "HubSpot"]
+    tools: ["AWS", "Kubernetes", "Stripe", "Redis", "GraphQL"]
   },
   {
-    category: "Growth",
-    title: "SEO & Visibility",
-    description: "Dominate search results with data-driven SEO and content strategies.",
-    longDescription: "Being found is half the battle. We implement technical SEO and content architectures that signal authority to Google, driving organic traffic that compounds over time.",
-    icon: <Search className="w-8 h-8" />,
+    category: "Automation",
+    title: "AI & Automation",
+    description: "Automate repetitive workflows and integrate AI where it creates real value.",
+    longDescription: "We connect disparate software systems through custom API integrations and deploy AI to handle data processing. The goal is to eliminate manual data entry and reduce operational friction.",
+    icon: <Cpu className="w-8 h-8" />,
     features: [
-        "Technical Website Audits",
-        "Keyword Strategy & Mapping",
-        "On-Page & Off-Page Optimization",
-        "Local SEO Dominance"
+        "Custom API Integrations",
+        "LLM Implementation",
+        "Data Processing Pipeline",
+        "System Interoperability"
     ],
-    tools: ["Semrush", "Ahrefs", "Google Search Console", "Screaming Frog"]
+    tools: ["OpenAI", "Python", "LangChain", "REST APIs", "Webhooks"]
   },
   {
-    category: "Brand & Social",
-    title: "Social & Branding",
-    description: "Visual identities and social strategies that build community and trust.",
-    longDescription: "Your brand is what people say when you're not in the room. We craft memorable visual identities and social narratives that turn passive followers into active community members.",
-    icon: <Megaphone className="w-8 h-8" />,
+    category: "Enterprise",
+    title: "Enterprise Systems",
+    description: "ERP, CRM, internal dashboards, portals and workflow management systems.",
+    longDescription: "Heavy-duty architecture for large-scale operations. We help organizations centralize their data, manage resources, and streamline internal communications into a single, unified system.",
+    icon: <Database className="w-8 h-8" />,
     features: [
-        "Brand Identity & Logo Design",
-        "Social Media Management",
-        "Content Creation (Reels/Shorts)",
-        "Community Building"
+        "Custom ERPs & CRMs",
+        "Data Centralization",
+        "Role-based Access Control",
+        "Resource Management"
     ],
-    tools: ["Figma", "Adobe Suite", "Canva", "Buffer"]
-  },
-  {
-    category: "Creative",
-    title: "3D & Motion",
-    description: "Cinematic 3D visuals and motion graphics to make your brand impossible to ignore.",
-    longDescription: "In a noisy world, motion grabs attention. We create stunning 3D product renders and motion graphics that explain complex ideas in seconds.",
-    icon: <Globe className="w-8 h-8" />,
-    features: [
-        "3D Product Rendering",
-        "WebGL Web Experiences",
-        "Motion Graphics for Ads",
-        "Lottie Animations"
-    ],
-    tools: ["Blender", "Three.js", "After Effects", "Spline"]
+    tools: ["PostgreSQL", "Elasticsearch", "Microservices", "Docker", "GCP"]
   },
 ];
 
@@ -124,7 +131,7 @@ export const Services = () => {
             viewport={{ once: true }}
             className="text-brc-orange font-bold tracking-widest uppercase text-sm mb-4 block"
           >
-            Our Expertise
+            Core Competencies
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -132,17 +139,18 @@ export const Services = () => {
             viewport={{ once: true }}
             className="font-display text-4xl md:text-5xl font-bold text-white mb-6"
           >
-            We Build Digital <br />
-            <span className="text-gray-500">Empires.</span>
+            Engineering <br />
+            <span className="text-gray-500">Business Software.</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 text-lg"
+            className="text-gray-400 text-lg leading-relaxed"
           >
-            A full-stack approach to growth. We merge engineering precision with marketing psychology.
+            We partner with companies that need custom technology to operate. 
+            No marketing buzzwords, just secure, reliable software built to scale with your operations.
           </motion.p>
         </div>
 
@@ -160,16 +168,15 @@ export const Services = () => {
               variants={item}
               className="h-full"
             >
-              {/* 2. USING THE HYBRID COMPONENT */}
               <SpotlightTiltCard
                 onClick={() => setSelectedService(service)}
-                intensity={25} // High Tilt
-                spotlightColor="rgba(255, 87, 34, 0.2)" // High Visibility Spotlight
+                intensity={25}
+                spotlightColor="rgba(255, 87, 34, 0.2)"
                 className="group h-full cursor-pointer"
               >
                 <div className="p-8 h-full flex flex-col">
                     
-                    {/* Icon Container - Added a subtle shadow */}
+                    {/* Icon Container */}
                     <div className="mb-6 relative z-10 p-3 bg-white/5 rounded-2xl w-fit border border-white/5 group-hover:border-brc-orange/30 group-hover:text-brc-orange text-gray-300 transition-colors shadow-lg shadow-transparent group-hover:shadow-brc-orange/10">
                     {service.icon}
                     </div>

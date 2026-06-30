@@ -132,7 +132,7 @@ export const About = () => {
                 
             </div>
 
-            {/* Right: The Values Grid (Tech + Marketing Mindset) */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {values.map((item, index) => (
                     <SpotlightTiltCard

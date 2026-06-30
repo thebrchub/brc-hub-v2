@@ -1,9 +1,8 @@
 import { Instagram, Linkedin, Facebook, Mail, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
-import { scroller } from 'react-scroll'; // Import scroller
-import { useLocation, useNavigate, Link } from 'react-router-dom'; // Import hooks
-
+import { scroller } from 'react-scroll';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 // Custom X (formerly Twitter) Logo Component
 const XLogo = ({ className }: { className?: string }) => (
@@ -66,8 +65,8 @@ export const Footer = () => {
                 viewport={{ once: true }}
                 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight mb-6"
             >
-              Have an idea? <br />
-              <span className="text-gray-500">Let's build it.</span>
+              Have a problem? <br />
+              <span className="text-gray-500">Let's engineer it.</span>
             </motion.h2>
             <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -76,8 +75,8 @@ export const Footer = () => {
                 transition={{ delay: 0.1 }}
                 className="text-lg text-gray-400 max-w-xl"
             >
-              From high-performance code to strategic marketing campaigns. 
-              We are the bridge between your vision and market dominance.
+              From custom software architecture to complex API integrations. 
+              We build scalable technology solutions for modern businesses.
             </motion.p>
           </div>
           
@@ -88,13 +87,12 @@ export const Footer = () => {
             transition={{ delay: 0.2 }}
             className="flex-shrink-0"
           >
-              {/* UPDATED BUTTON WITH CLICK HANDLER */}
               <Button 
                 onClick={handleStartProject}
                 size="lg" 
                 className="group h-20 px-12 text-xl rounded-full shadow-2xl shadow-orange-500/20 hover:shadow-orange-500/40"
               >
-                Start a Project 
+                Discuss a Project 
                 <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
               </Button>
           </motion.div>
@@ -117,10 +115,10 @@ export const Footer = () => {
             </div>
             
             <div className="flex items-center gap-4 pt-4">
-              <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/thebrchub" />
               <SocialIcon icon={<Linkedin size={20} />} href="https://www.linkedin.com/company/the-brc-hub" />
               <SocialIcon icon={<XLogo />} href="https://twitter.com/thebrchub" />
               <SocialIcon icon={<Facebook size={20} />} href="https://www.facebook.com/thebrchub" />
+              <SocialIcon icon={<Instagram size={20} />} href="https://instagram.com/thebrchub" />
             </div>
           </div>
 
@@ -128,21 +126,21 @@ export const Footer = () => {
           <div className="md:col-span-2 md:col-start-6">
             <h4 className="font-display text-lg font-semibold text-white mb-6">Engineering</h4>
             <ul className="space-y-4">
-              <FooterLink href="#">Web Development</FooterLink>
+              <FooterLink href="#">Custom Software</FooterLink>
+              <FooterLink href="#">Web Applications</FooterLink>
               <FooterLink href="#">Mobile Apps</FooterLink>
-              <FooterLink href="#">SaaS Platforms</FooterLink>
-              <FooterLink href="#">AI Solutions</FooterLink>
+              <FooterLink href="#">SaaS Development</FooterLink>
             </ul>
           </div>
 
-          {/* Links Column 2: MARKETING */}
+          {/* Links Column 2: SOLUTIONS (Replaced Marketing) */}
           <div className="md:col-span-2">
-            <h4 className="font-display text-lg font-semibold text-white mb-6">Growth</h4>
+            <h4 className="font-display text-lg font-semibold text-white mb-6">Solutions</h4>
             <ul className="space-y-4">
-              <FooterLink href="#">Digital Marketing</FooterLink>
-              <FooterLink href="#">Brand Identity</FooterLink>
-              <FooterLink href="#">SEO & Content</FooterLink>
-              <FooterLink href="#">Social Media</FooterLink>
+              <FooterLink href="#">Enterprise Systems</FooterLink>
+              <FooterLink href="#">AI Integrations</FooterLink>
+              <FooterLink href="#">Business Automation</FooterLink>
+              <FooterLink href="#">MVP Development</FooterLink>
             </ul>
           </div>
 
@@ -167,7 +165,7 @@ export const Footer = () => {
         {/* 4. BOTTOM BAR */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 gap-4">
           <p className="text-gray-600 text-sm">
-            © {currentYear} Blazing Render Creation Hub LLP. All rights reserved.
+            © {currentYear} BRC Hub LLP. All rights reserved.
           </p>
           <div className="flex items-center gap-8 text-sm text-gray-500">
             <Link to="/privacy-policy" className="hover:text-brc-orange transition-colors">

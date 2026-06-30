@@ -39,9 +39,9 @@ export const Hero = () => {
              <TextDecrypt text="Code That Performs." />
           </div>
           <div className="text-white flex flex-wrap justify-center gap-x-2 sm:gap-x-4 mt-2">
-            <span>Marketing That</span> 
+            <span>Technology That</span> 
             <span className="text-brc-orange">
-                <TextDecrypt text="Converts." />
+                <TextDecrypt text="Delivers." />
             </span>
           </div>
         </div>
@@ -53,8 +53,9 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed font-sans font-light px-4"
         >
-          A full-cycle digital agency merging creative engineering with data-driven growth strategies. 
-          We don't just build products; we build businesses.
+        We design and build custom software, web applications and AI-powered solutions
+
+that transform ideas into scalable digital products.
         </motion.p>
 
         {/* CTA Buttons */}

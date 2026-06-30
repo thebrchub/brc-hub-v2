@@ -84,8 +84,8 @@ export const AllProjects = () => {
   return (
     <>
       <SEO 
-        title="BRC Hub LLP | Premium Tech & Growth Agency"
-        description="Premium softwares. Data-driven growth. BRC Hub partners with visionary brands to engineer world-class digital experiences. Web | App | SaaS | Marketing. Based in Toranagallu."
+        title="BRC Hub LLP | Engineering Business Software"
+        description="Explore our portfolio of custom software, SaaS platforms, web applications, and enterprise systems engineered for scalability and performance."
       />
     <div className="min-h-screen bg-brc-black pt-32 pb-20">
       <div className="container mx-auto px-6">

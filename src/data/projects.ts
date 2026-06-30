@@ -86,6 +86,26 @@ export const projects: Project[] = [
     liveUrl: "https://forgefit.brchub.tech/"
   },
 
+  {
+  id: "aurelia-estates",
+  title: "Aurelia Estates",
+  category: "Web",
+  client: "Aurelia Estates",
+  timeline: "2 Weeks",
+  description: "A cinematic, ultra-luxury digital showcase for an elite real estate development portfolio.",
+  fullDescription: "Aurelia Estates required a platform that transcended traditional real estate websites. We engineered a monumental, editorial-style experience that feels less like a brochure and more like a high-end architectural dossier, focusing on cinematic scale, interactive telemetry, and unparalleled prestige.",
+  challenge: "Overcoming the generic 'property listing' aesthetic by creating an immersive, exclusive user journey. We had to balance heavy, high-resolution architectural imagery and complex scroll animations without compromising on web performance.",
+  solution: "Built a highly interactive SPA with React, Framer Motion, and Lenis smooth scrolling. We implemented cinematic parallax heroes, a bespoke 360° interactive amenities orbit, and a glassmorphism VIP application dossier, replacing all standard HTML inputs with custom luxury UI components.",
+  results: [
+    "Cinematic Scroll Experience", 
+    "Interactive 360° Amenity Explorer", 
+    "Exclusive VIP Application Flow"
+  ],
+  stack: ["React", "Framer Motion", "Tailwind CSS", "Lenis Scroll"],
+  image: "/portfolio/aurelia.webp",
+  liveUrl: "https://aurelia.brchub.tech/" 
+},
+
  {
   id: "lumina-dental",
   title: "Lumina Dental",

@@ -54,8 +54,8 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="BRC Hub LLP | Premium Tech & Growth Agency"
-        description="Premium softwares. Data-driven growth. BRC Hub partners with visionary brands to engineer world-class digital experiences. Web | App | SaaS | Marketing. Based in Toranagallu."
+        title="BRC Hub LLP | Engineering Business Software"
+        description="BRC Hub LLP is a pure technology solutions company. We engineer custom software, scalable web applications, native mobile apps, SaaS platforms, and enterprise systems to solve complex operational problems."
       />
       
       {/* Since these are standard imports, there is NO loading spinner here.

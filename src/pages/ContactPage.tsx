@@ -53,11 +53,10 @@ const TechInput = ({ label, type = "text", ...props }: any) => {
 };
 
 const services = [
-  "Web Development",
-  "Mobile App",
-  "SaaS / MVP",
-  "Digital Marketing",
-  "UI/UX Design",
+  "Custom Software",
+  "Web / Mobile Applications",
+  "AI & Automation",
+  "Enterprise Systems",
   "Other"
 ];
 
@@ -121,8 +120,8 @@ export const ContactPage = () => {
   return (
     <>
       <SEO 
-        title="Contact Us | BRC Hub"
-        description="Start your project with BRC Hub. Contact us for premium web development, app solutions, and digital growth strategies."
+        title="Contact Us | BRC Hub LLP"
+        description="Partner with BRC Hub LLP for custom software engineering, SaaS platforms, AI integrations, and enterprise technology solutions."
         url="/contact-us"
       />
       
@@ -153,8 +152,8 @@ export const ContactPage = () => {
                     transition={{ delay: 0.2 }}
                     className="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
                     >
-                    Let's Build Something <br />
-                    <span className="text-gray-600">Legendary.</span>
+                    Let's Engineer <br />
+                    <span className="text-gray-600">Your Solution.</span>
                     </motion.h1>
                     <motion.p 
                     initial={{ opacity: 0, y: 20 }}
@@ -162,7 +161,7 @@ export const ContactPage = () => {
                     transition={{ delay: 0.3 }}
                     className="text-gray-400 text-lg"
                     >
-                    Ready to start? Tell us about your project and we will get back to you within 24 hours.
+                    Ready to solve complex operational problems? Tell us about your project and our engineering team will get back to you within 24 hours.
                     </motion.p>
                 </div>
 
@@ -209,14 +208,14 @@ export const ContactPage = () => {
                                     <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">1</span>
                                     <div>
                                         <h4 className="text-white font-medium text-sm">We analyze your request</h4>
-                                        <p className="text-gray-500 text-xs mt-1">Our team reviews your requirements within 24 hours.</p>
+                                        <p className="text-gray-500 text-xs mt-1">Our engineering team reviews your technical requirements within 24 hours.</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">2</span>
                                     <div>
-                                        <h4 className="text-white font-medium text-sm">Free Consultation</h4>
-                                        <p className="text-gray-500 text-xs mt-1">We schedule a quick call to discuss strategy & budget.</p>
+                                        <h4 className="text-white font-medium text-sm">Architecture Consultation</h4>
+                                        <p className="text-gray-500 text-xs mt-1">We schedule a call to discuss system architecture, scalability, and scope.</p>
                                     </div>
                                 </li>
                             </ul>
@@ -249,7 +248,7 @@ export const ContactPage = () => {
                                     </motion.div>
                                     <h3 className="text-3xl font-display font-bold text-white mb-2">Message Received!</h3>
                                     <p className="text-gray-400 max-w-md">
-                                        Thanks for reaching out, {submittedName || 'Partner'}. Our team is reviewing your details and will get back to you within 24 hours.
+                                        Thanks for reaching out, {submittedName || 'Partner'}. Our team is reviewing your technical requirements and will get back to you within 24 hours.
                                     </p>
                                     <Button 
                                         onClick={() => {
@@ -328,7 +327,7 @@ export const ContactPage = () => {
                                         </div>
                                         
                                         <TechInput 
-                                            label="Tell us about your project..." 
+                                            label="Tell us about the business problem..." 
                                             type="textarea"
                                             required
                                             value={formData.message}
@@ -377,14 +376,14 @@ export const ContactPage = () => {
                                 <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">1</span>
                                 <div>
                                     <h4 className="text-white font-medium text-sm">We analyze your request</h4>
-                                    <p className="text-gray-500 text-xs mt-1">Our team reviews your requirements within 24 hours.</p>
+                                    <p className="text-gray-500 text-xs mt-1">Our engineering team reviews your technical requirements within 24 hours.</p>
                                 </div>
                             </li>
                             <li className="flex gap-4">
                                 <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brc-orange/10 text-brc-orange flex items-center justify-center font-bold text-sm border border-brc-orange/20">2</span>
                                 <div>
-                                    <h4 className="text-white font-medium text-sm">Free Consultation</h4>
-                                    <p className="text-gray-500 text-xs mt-1">We schedule a quick call to discuss strategy & budget.</p>
+                                    <h4 className="text-white font-medium text-sm">Architecture Consultation</h4>
+                                    <p className="text-gray-500 text-xs mt-1">We schedule a call to discuss system architecture, scalability, and scope.</p>
                                 </div>
                             </li>
                         </ul>
