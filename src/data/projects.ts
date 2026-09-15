@@ -275,21 +275,21 @@ export const projects: Project[] = [
     liveUrl: "https://orvexa.brchub.info/"
   },
 
-  {
-    id: "digivala",
-    title: "Digivala LLP",
-    category: "Web",
-    client: "Digivala LLP",
-    timeline: "2 Weeks",
-    description: "Agency website for a digital marketing firm.",
-    fullDescription: "A vibrant website for Digivala, a sub-company of LegalVala focused on digital growth.",
-    challenge: "Creating a distinct brand identity separate from the parent legal firm.",
-    solution: "Clean, lightweight website using pure HTML/CSS.",
-    results: ["Brand Identity Established"],
-    stack: ["HTML", "CSS"],
-    image: "/portfolio/nonfeature/digivala.webp",
-    liveUrl: "https://digivala.in/"
-  },
+  // {
+  //   id: "digivala",
+  //   title: "Digivala LLP",
+  //   category: "Web",
+  //   client: "Digivala LLP",
+  //   timeline: "2 Weeks",
+  //   description: "Agency website for a digital marketing firm.",
+  //   fullDescription: "A vibrant website for Digivala, a sub-company of LegalVala focused on digital growth.",
+  //   challenge: "Creating a distinct brand identity separate from the parent legal firm.",
+  //   solution: "Clean, lightweight website using pure HTML/CSS.",
+  //   results: ["Brand Identity Established"],
+  //   stack: ["HTML", "CSS"],
+  //   image: "/portfolio/nonfeature/digivala.webp",
+  //   liveUrl: "https://digivala.in/"
+  // },
 
 
 

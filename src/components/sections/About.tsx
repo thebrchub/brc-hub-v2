@@ -116,7 +116,7 @@ export const About = () => {
                     className="text-gray-400 text-lg leading-relaxed mb-8"
                 >
                     We are not just a team of coders; we are a collective of dreamers and doers. 
-                    BRC Hub was born from a simple idea: that technology shouldn't just function—it should 
+                    BRC Hub was born from a simple idea: that technology shouldn't just function, it should 
                     inspire. We merge the precision of engineering with the soul of creative design.
                 </motion.p>
                 
