@@ -45,31 +45,44 @@ export const projects: Project[] = [
         "/portfolio/lawwise/4.webp"
     ]
   },
+  {
+  id: "gobrc-image-tools",
+  title: "GoBRC Image Tools",
+  category: "SaaS",
+  client: "BRC Hub LLP",
+  timeline: "3 Days",
+  description:
+    "A browser-based image toolkit to compress, resize and convert images with ease.",
+  fullDescription:
+    "We built GoBRC Image Tools, a lightweight web platform that makes everyday image optimisation accessible directly from the browser. Users can compress images, resize dimensions, and convert between popular formats including JPG, PNG and WebP through a simple, streamlined interface.",
+  challenge:
+    "Image optimisation is a frequent task for website owners, designers and content creators. Existing tools can introduce unnecessary complexity into simple workflows, making quick image preparation more time-consuming than it needs to be.",
+  solution:
+    "We developed a responsive, browser-based image utility platform focused on simplicity and usability. The interface brings image compression, format conversion and resizing into one place, with a workflow designed to help users process images without installing desktop software.",
+  results: [
+    "Multiple image utilities in one platform",
+    "Support for JPG, PNG and WebP workflows",
+    "Responsive interface for desktop and mobile",
+    "Designed for quick, straightforward image processing"
+  ],
+  stack: [
+    "React",
+    "Vite",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  image: "/portfolio/gobrc-image-tools.webp",
+  gallery: [
+    "/portfolio/gobrc/1.png",
+    "/portfolio/gobrc/2.png",
+    "/portfolio/gobrc/3.png",
+    "/portfolio/gobrc/4.png"
+  ],
+  liveUrl: "https://image.brchub.tech/"
+},
 
   // --- WEB (Has Live Link) ---
-  {
-    id: "powerbird",
-    title: "Powerbird Elevators",
-    category: "Web",
-    client: "Powerbird Elevators",
-    timeline: "3 Weeks", 
-    description: "Premium animated website for a vertical mobility leader.",
-    fullDescription: "A high-end corporate website featuring an immersive 'Lift Intro' animation, interactive product showcases, and a dark-themed premium UI. Built to reflect the engineering precision of Powerbird Elevators.",
-    challenge: "The client needed a distinct digital identity to stand out from traditional, static competitor sites.",
-    solution: "We engineered a custom React application with complex Framer Motion animations, a unique preloader, and a responsive glassmorphism design.",
-    results: ["Enhanced Brand Image", "Increased Service Inquiries"],
-    stack: ["React", "Tailwind CSS", "Framer Motion"],
-    image: "/portfolio/powerbird/thumb.webp",
-    gallery: [
-        "/portfolio/powerbird/1.webp",
-        "/portfolio/powerbird/2.webp", 
-        "/portfolio/powerbird/3.webp",  
-        "/portfolio/powerbird/4.webp",
-        "/portfolio/powerbird/5.webp"
-    ],
-    liveUrl: "https://www.powerbirdelevators.in/" 
-  },
-
+ 
 {
     id: "forgefit",
     title: "ForgeFit Performance Club",
@@ -322,5 +335,68 @@ export const projects: Project[] = [
     results: ["UI/UX Finalized"],
     stack: ["Flutter", "Java"],
     image: "/portfolio/nonfeature/gita.webp"
-  }
+  },
+
+  
+{
+  id: "gobrc-image-tools",
+  title: "GoBRC Image Tools",
+  category: "SaaS",
+  client: "BRC Hub LLP",
+  timeline: "3 Days",
+  description:
+    "A browser-based image toolkit to compress, resize and convert images with ease.",
+  fullDescription:
+    "We built GoBRC Image Tools, a lightweight web platform that makes everyday image optimisation accessible directly from the browser. Users can compress images, resize dimensions, and convert between popular formats including JPG, PNG and WebP through a simple, streamlined interface.",
+  challenge:
+    "Image optimisation is a frequent task for website owners, designers and content creators. Existing tools can introduce unnecessary complexity into simple workflows, making quick image preparation more time-consuming than it needs to be.",
+  solution:
+    "We developed a responsive, browser-based image utility platform focused on simplicity and usability. The interface brings image compression, format conversion and resizing into one place, with a workflow designed to help users process images without installing desktop software.",
+  results: [
+    "Multiple image utilities in one platform",
+    "Support for JPG, PNG and WebP workflows",
+    "Responsive interface for desktop and mobile",
+    "Designed for quick, straightforward image processing"
+  ],
+  stack: [
+    "React",
+    "Vite",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  image: "/portfolio/gobrc-image-tools.webp",
+  gallery: [
+    "/portfolio/gobrc/1.webp",
+    "/portfolio/gobrc/2.webp",
+    "/portfolio/gobrc/3.webp",
+    "/portfolio/gobrc/4.webp"
+  ],
+  liveUrl: "https://image.brchub.tech/"
+},
+ {
+    id: "powerbird",
+    title: "Powerbird Elevators",
+    category: "Web",
+    client: "Powerbird Elevators",
+    timeline: "3 Weeks", 
+    description: "Premium animated website for a vertical mobility leader.",
+    fullDescription: "A high-end corporate website featuring an immersive 'Lift Intro' animation, interactive product showcases, and a dark-themed premium UI. Built to reflect the engineering precision of Powerbird Elevators.",
+    challenge: "The client needed a distinct digital identity to stand out from traditional, static competitor sites.",
+    solution: "We engineered a custom React application with complex Framer Motion animations, a unique preloader, and a responsive glassmorphism design.",
+    results: ["Enhanced Brand Image", "Increased Service Inquiries"],
+    stack: ["React", "Tailwind CSS", "Framer Motion"],
+    image: "/portfolio/powerbird/thumb.webp",
+    gallery: [
+        "/portfolio/powerbird/1.webp",
+        "/portfolio/powerbird/2.webp", 
+        "/portfolio/powerbird/3.webp",  
+        "/portfolio/powerbird/4.webp",
+        "/portfolio/powerbird/5.webp"
+    ],
+    liveUrl: "https://www.powerbirdelevators.in/" 
+  },
+
+
+
+
 ];

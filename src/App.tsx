@@ -20,6 +20,11 @@ import { Contact } from './components/sections/Contact';
 // This saves huge amounts of data on the initial load.
 const CaseStudy = lazy(() => import('./pages/CaseStudy').then(module => ({ default: module.CaseStudy })));
 const AllProjects = lazy(() => import('./pages/AllProjects').then(module => ({ default: module.AllProjects })));
+const Pricing = lazy(() =>
+  import('./pages/Pricing').then(module => ({
+    default: module.Pricing,
+  }))
+);
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then(module => ({ default: module.PrivacyPolicy })));
 const TermsOfService = lazy(() => import('./pages/TermsOfService').then(module => ({ default: module.TermsOfService })));
 const NotFound = lazy(() => import('./pages/NotFound').then(module => ({ default: module.NotFound })));
@@ -89,6 +94,7 @@ function App() {
               {/* These will trigger the PageLoader briefly on first click */}
               <Route path="/case-study/:id" element={<CaseStudy />} />
               <Route path="/work" element={<AllProjects />} />
+              <Route path="/pricing" element={<Pricing />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               

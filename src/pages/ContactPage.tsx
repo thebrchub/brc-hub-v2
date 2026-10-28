@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Mail, MapPin, Loader2, CheckCircle2, Phone } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Link } from "react-router-dom";
 import { buildInquiryPayload, sendInquiryEmail } from "../utils/sendEmail";
@@ -188,6 +188,21 @@ export const ContactPage = () => {
                                         <span className="font-medium">info@brchub.tech</span>
                                     </div>
                                 </div>
+                                <a
+  href="tel:+917892946698"
+  className="flex items-start gap-4 text-gray-300 group hover:text-white transition-colors"
+>
+  <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
+    <Phone size={20} />
+  </div>
+
+  <div>
+    <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">
+      Call Us
+    </p>
+    <span className="font-medium">+91 78929 46698</span>
+  </div>
+</a>
                                 <div className="flex items-start gap-4 text-gray-300 group cursor-pointer hover:text-white transition-colors">
                                     <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-brc-orange group-hover:bg-brc-orange group-hover:text-white transition-colors">
                                         <MapPin size={20} />

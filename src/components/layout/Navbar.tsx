@@ -1,284 +1,399 @@
-import { useState, useEffect } from 'react';
-import { Link as ScrollLink } from 'react-scroll';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+
+import { useState, useEffect } from "react";
+import { Link as ScrollLink } from "react-scroll";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Menu, X, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-  
+
   const navLinks = [
-    { name: 'Home', to: 'hero' },
-    { name: 'About', to: 'about' },
-    { name: 'Services', to: 'services' },
-    { name: 'Work', to: 'work' },
-    { name: 'Contact', to: 'contact' },
+    { name: "Home", to: "hero" },
+    { name: "About", to: "about" },
+    { name: "Services", to: "services" },
+    { name: "Pricing", to: "/pricing" },
+    { name: "Work", to: "work" },
+    { name: "Contact", to: "contact" },
   ];
 
-  // 1. Scroll Control Logic
+  // Hide the navbar while scrolling down; reveal it while scrolling up.
   useEffect(() => {
+    let previousScrollY = window.scrollY;
+
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY === 0) {
+
+      if (currentScrollY <= 0) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        if (!open) setIsVisible(false);
-      } else {
+      } else if (currentScrollY > previousScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else if (currentScrollY < previousScrollY) {
         setIsVisible(true);
       }
-      setLastScrollY(currentScrollY);
-    };
-    window.addEventListener('scroll', controlNavbar);
-    return () => window.removeEventListener('scroll', controlNavbar);
-  }, [lastScrollY, open]);
 
-  // 2. LOCK BODY SCROLL WHEN MOBILE MENU IS OPEN
+      previousScrollY = currentScrollY;
+
+    };
+
+    window.addEventListener("scroll", controlNavbar, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", controlNavbar);
+    };
+  }, []);
+
+  // Prevent background scrolling while the mobile drawer is open.
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [open]);
 
+  // Navigate to a homepage section from another route.
   const handleNavClick = (targetId: string) => {
     setOpen(false);
+
     if (!isHomePage) {
-        navigate("/", { state: { scrollTo: targetId } });
+      navigate("/", { state: { scrollTo: targetId } });
     }
   };
 
   const handleLogoClick = () => {
+    setOpen(false);
+
     if (isHomePage) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-        navigate("/", { state: { scrollTo: "hero" } });
+      navigate("/", { state: { scrollTo: "hero" } });
     }
   };
 
+  const linkClasses =
+    "relative block cursor-pointer px-5 py-2 text-sm font-medium text-gray-400 transition-colors duration-200 hover:text-white";
+
+  const HoverPill = ({ index }: { index: number }) => (
+    <>
+      {hoveredIndex === index && (
+        <motion.span
+          layoutId="hover-pill"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
+          transition={{ duration: 0.2 }}
+          className="absolute inset-0 -z-10 rounded-full bg-white/10"
+        />
+      )}
+    </>
+  );
+
   return (
     <>
-      <header 
-        className={`
-          fixed top-0 left-0 w-full z-50 overflow-visible
-          py-6 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]
-          ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-        `}
+      {/* MAIN NAVBAR */}
+      <header
+        className={`fixed left-0 top-0 z-50 w-full overflow-visible py-6 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          isVisible ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative">
-
+        <div className="relative mx-auto flex max-w-7xl items-center justify-between px-6">
           {/* LOGO */}
-          <div 
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer relative z-50"
+          <button
+            type="button"
             onClick={handleLogoClick}
+            aria-label="BRC Hub home"
+            className="relative z-50 flex flex-shrink-0 cursor-pointer items-center gap-2 text-left"
           >
-            <div>
-                <img src="/logo.svg" alt="BRC Hub" className="h-10 w-auto object-contain sm:h-12" />
-            </div>
-            
-            <motion.span 
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }} 
-                className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white block"
-            >
-                BRC <span className="text-brc-orange">Hub</span>
-            </motion.span>
-          </div>
+            <img
+              src="/logo.svg"
+              alt="BRC Hub"
+              className="h-10 w-auto object-contain sm:h-12"
+            />
 
-          {/* DESKTOP NAV */}
-          <nav 
-            className={`
-              hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-              items-center gap-1 p-1.5 rounded-full z-40 transition-all duration-300
-              bg-white/5 backdrop-blur-xl border border-white/10 
-              shadow-lg shadow-black/20 ring-1 ring-white/5
-            `}
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="block font-display text-2xl font-bold tracking-tight text-white sm:text-3xl"
+            >
+              BRC <span className="text-brc-orange">Hub</span>
+            </motion.span>
+          </button>
+
+          {/* DESKTOP NAVIGATION */}
+          <nav
+            aria-label="Main navigation"
+            className="absolute left-1/2 top-1/2 z-40 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 shadow-lg shadow-black/20 ring-1 ring-white/5 backdrop-blur-xl md:flex"
             onMouseLeave={() => setHoveredIndex(null)}
           >
             {navLinks.map((item, index) => {
-                const linkClasses = "relative px-5 py-2 text-sm text-gray-400 font-medium hover:text-white cursor-pointer transition-colors duration-200 z-10 block";
-                
-                return isHomePage ? (
-                    <ScrollLink
-                        key={item.name}
-                        to={item.to}
-                        spy={true}
-                        smooth={true}
-                        offset={-100}
-                        duration={800}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        className={linkClasses}
-                        activeClass="!text-white font-semibold"
-                    >
-                        {item.name}
-                        {hoveredIndex === index && (
-                            <motion.span
-                            layoutId="hover-pill"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute inset-0 rounded-full -z-10 bg-white/10"
-                            />
-                        )}
-                    </ScrollLink>
-                ) : (
-                    <div
-                        key={item.name}
-                        onClick={() => handleNavClick(item.to)}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        className={linkClasses}
-                    >
-                        {item.name}
-                        {hoveredIndex === index && (
-                            <motion.span
-                            layoutId="hover-pill"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute inset-0 rounded-full -z-10 bg-white/10"
-                            />
-                        )}
-                    </div>
+              // Pricing is a real page, not a homepage scroll section.
+              if (item.to === "/pricing") {
+                return (
+                  <Link
+                    key={item.name}
+                    to="/pricing"
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    aria-current={
+                      location.pathname === "/pricing" ? "page" : undefined
+                    }
+                    className={`${linkClasses} ${
+                      location.pathname === "/pricing"
+                        ? "font-semibold text-white"
+                        : ""
+                    }`}
+                  >
+                    {item.name}
+                    <HoverPill index={index} />
+                  </Link>
                 );
+              }
+
+              // On the homepage, use smooth section scrolling.
+              if (isHomePage) {
+                return (
+                  <ScrollLink
+                    key={item.name}
+                    to={item.to}
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    duration={800}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    className={linkClasses}
+                    activeClass="!text-white font-semibold"
+                  >
+                    {item.name}
+                    <HoverPill index={index} />
+                  </ScrollLink>
+                );
+              }
+
+              // On other routes, return to the requested homepage section.
+              return (
+                <button
+                  type="button"
+                  key={item.name}
+                  onClick={() => handleNavClick(item.to)}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  className={`${linkClasses} text-left`}
+                >
+                  {item.name}
+                  <HoverPill index={index} />
+                </button>
+              );
             })}
           </nav>
 
-          {/* CTA & MOBILE MENU BUTTON */}
-          <div className="flex items-center gap-4 flex-shrink-0 z-50">
+          {/* DESKTOP CTA + MOBILE MENU BUTTON */}
+          <div className="z-50 flex flex-shrink-0 items-center gap-4">
             <div className="hidden md:block">
-                {isHomePage ? (
-                    <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
-                        <button className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20">
-                            <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
-                            Start Project <ChevronRight size={14} />
-                            </span>
-                        </button>
-                    </ScrollLink>
-                ) : (
-                    <button 
-                        onClick={() => handleNavClick("contact")}
-                        className="group relative px-6 py-2.5 rounded-full text-sm font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white hover:shadow-orange-500/20"
-                    >
-                        <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Start Project <ChevronRight size={14} />
-                        </span>
-                    </button>
-                )}
+              {isHomePage ? (
+                <ScrollLink to="contact" smooth={true} duration={800} offset={-50}>
+                  <button
+                    type="button"
+                    className="group relative overflow-hidden rounded-full bg-brc-orange px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-transform hover:shadow-orange-500/20 active:scale-95"
+                  >
+                    <span className="relative z-10 flex items-center gap-2 transition-all group-hover:gap-3">
+                      Start Project
+                      <ChevronRight size={14} />
+                    </span>
+                  </button>
+                </ScrollLink>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => handleNavClick("contact")}
+                  className="group relative overflow-hidden rounded-full bg-brc-orange px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-transform hover:shadow-orange-500/20 active:scale-95"
+                >
+                  <span className="relative z-10 flex items-center gap-2 transition-all group-hover:gap-3">
+                    Start Project
+                    <ChevronRight size={14} />
+                  </span>
+                </button>
+              )}
             </div>
+
             <button
+              type="button"
               onClick={() => setOpen(true)}
-              className="md:hidden p-2 rounded-full transition text-white bg-white/10 border border-white/10 hover:bg-white/20"
+              aria-label="Open navigation menu"
+              aria-expanded={open}
+              className="rounded-full border border-white/10 bg-white/10 p-2 text-white transition hover:bg-white/20 md:hidden"
             >
               <Menu size={24} />
             </button>
           </div>
-
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE NAVIGATION DRAWER */}
       <AnimatePresence>
         {open && (
           <>
-            {/* UPDATED: Added touch-none to prevent background interaction */}
+            {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] touch-none"
+              className="fixed inset-0 z-[60] touch-none bg-black/80 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
+              aria-hidden="true"
             />
+
+            {/* Drawer */}
             <motion.aside
-              // UPDATED: Changed h-full to h-[100dvh] to fix the mobile lifting issue
-              className="fixed top-0 right-0 h-[100dvh] w-[85%] max-w-sm bg-[#0A0A0A] border-l border-white/10 z-[70] shadow-2xl flex flex-col"
-              initial={{ x: '100%' }}
+              className="fixed right-0 top-0 z-[70] flex h-[100dvh] w-[85%] max-w-sm flex-col border-l border-white/10 bg-[#0A0A0A] shadow-2xl"
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
             >
-              {/* Mobile Header */}
-              <div className="flex items-center justify-between px-6 py-6 border-b border-white/5 bg-white/[0.02]">
-                <span className="text-sm font-bold tracking-widest uppercase text-gray-500">Menu</span>
-                <button onClick={() => setOpen(false)} className="p-2 rounded-full hover:bg-white/10 text-white transition"><X size={24} /></button>
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-6 py-6">
+                <span className="text-sm font-bold uppercase tracking-widest text-gray-500">
+                  Menu
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close navigation menu"
+                  className="rounded-full p-2 text-white transition hover:bg-white/10"
+                >
+                  <X size={24} />
+                </button>
               </div>
 
-              {/* Mobile Links */}
-              {/* UPDATED: Added overscroll-contain to stop scroll chaining */}
-              <nav className="flex flex-col px-6 py-8 gap-2 flex-grow overflow-y-auto overscroll-contain">
-                {navLinks.map((item, i) => (
-                    isHomePage ? (
-                        <ScrollLink 
-                            key={item.name} 
-                            to={item.to} 
-                            smooth={true} 
-                            offset={-50} 
-                            duration={800} 
-                            onClick={() => setOpen(false)}
+              {/* Drawer Links */}
+              <nav
+                aria-label="Mobile navigation"
+                className="flex flex-grow flex-col gap-2 overflow-y-auto overscroll-contain px-6 py-8"
+              >
+                {navLinks.map((item, index) => {
+                  // Pricing navigates to its own route.
+                  if (item.to === "/pricing") {
+                    return (
+                      <Link
+                        key={item.name}
+                        to="/pricing"
+                        onClick={() => setOpen(false)}
+                        aria-current={
+                          location.pathname === "/pricing" ? "page" : undefined
+                        }
+                        className={`group flex items-center justify-between rounded-xl border p-4 transition-all ${
+                          location.pathname === "/pricing"
+                            ? "border-brc-orange/30 bg-brc-orange/10 text-white"
+                            : "border-transparent text-gray-300 hover:border-white/5 hover:bg-white/5 hover:text-white"
+                        }`}
+                      >
+                        <span className="text-lg font-medium">
+                          {item.name}
+                        </span>
+                        <ChevronRight
+                          size={16}
+                          className="text-gray-600 transition-colors group-hover:text-brc-orange"
+                        />
+                      </Link>
+                    );
+                  }
+
+                  // Homepage section links.
+                  if (isHomePage) {
+                    return (
+                      <ScrollLink
+                        key={item.name}
+                        to={item.to}
+                        smooth={true}
+                        offset={-50}
+                        duration={800}
+                        onClick={() => setOpen(false)}
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="group flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-4 text-gray-300 transition-all hover:border-white/5 hover:bg-white/5 hover:text-white"
                         >
-                            <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="group flex items-center justify-between p-4 rounded-xl text-gray-300 hover:bg-white/5 hover:text-white cursor-pointer border border-transparent hover:border-white/5 transition-all"
-                            >
-                            <span className="text-lg font-medium">{item.name}</span>
-                            <ChevronRight size={16} className="text-gray-600 group-hover:text-brc-orange transition-colors" />
-                            </motion.div>
-                        </ScrollLink>
-                    ) : (
-                        <div 
-                            key={item.name} 
-                            onClick={() => handleNavClick(item.to)}
-                        >
-                            <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="group flex items-center justify-between p-4 rounded-xl text-gray-300 hover:bg-white/5 hover:text-white cursor-pointer border border-transparent hover:border-white/5 transition-all"
-                            >
-                            <span className="text-lg font-medium">{item.name}</span>
-                            <ChevronRight size={16} className="text-gray-600 group-hover:text-brc-orange transition-colors" />
-                            </motion.div>
-                        </div>
-                    )
-                ))}
+                          <span className="text-lg font-medium">
+                            {item.name}
+                          </span>
+                          <ChevronRight
+                            size={16}
+                            className="text-gray-600 transition-colors group-hover:text-brc-orange"
+                          />
+                        </motion.div>
+                      </ScrollLink>
+                    );
+                  }
+
+                  // Other routes return to the homepage section.
+                  return (
+                    <button
+                      type="button"
+                      key={item.name}
+                      onClick={() => handleNavClick(item.to)}
+                      className="group flex w-full items-center justify-between rounded-xl border border-transparent p-4 text-left text-gray-300 transition-all hover:border-white/5 hover:bg-white/5 hover:text-white"
+                    >
+                      <span className="text-lg font-medium">
+                        {item.name}
+                      </span>
+                      <ChevronRight
+                        size={16}
+                        className="text-gray-600 transition-colors group-hover:text-brc-orange"
+                      />
+                    </button>
+                  );
+                })}
               </nav>
 
-              {/* Mobile Footer / CTA */}
-              <div className="p-6 border-t border-white/10 bg-white/[0.02]">
-                  {isHomePage ? (
-                     <ScrollLink to="contact" smooth={true} duration={800} offset={-50} onClick={() => setOpen(false)}>
-                        <button className="w-full group relative px-6 py-4 rounded-xl text-base font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white">
-                            <span className="relative z-10 flex items-center justify-center gap-2">
-                                Start Project <ChevronRight size={18} />
-                            </span>
-                        </button>
-                     </ScrollLink>
-                  ) : (
-                     <button 
-                        onClick={() => handleNavClick("contact")}
-                        className="w-full group relative px-6 py-4 rounded-xl text-base font-bold overflow-hidden transition-transform active:scale-95 shadow-lg bg-brc-orange text-white"
-                     >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
-                            Start Project <ChevronRight size={18} />
-                        </span>
-                     </button>
-                  )}
+              {/* Drawer CTA */}
+              <div className="border-t border-white/10 bg-white/[0.02] p-6">
+                {isHomePage ? (
+                  <ScrollLink
+                    to="contact"
+                    smooth={true}
+                    duration={800}
+                    offset={-50}
+                    onClick={() => setOpen(false)}
+                  >
+                    <button
+                      type="button"
+                      className="group w-full rounded-xl bg-brc-orange px-6 py-4 text-base font-bold text-white shadow-lg transition-transform active:scale-95"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        Start Project
+                        <ChevronRight size={18} />
+                      </span>
+                    </button>
+                  </ScrollLink>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick("contact")}
+                    className="group w-full rounded-xl bg-brc-orange px-6 py-4 text-base font-bold text-white shadow-lg transition-transform active:scale-95"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      Start Project
+                      <ChevronRight size={18} />
+                    </span>
+                  </button>
+                )}
               </div>
-
             </motion.aside>
           </>
         )}
